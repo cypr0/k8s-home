@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
-  path: ./kubernetes/main/apps/database/dragonfly/app
+  path: ./kubernetes/apps/database/dragonfly/app
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -35,7 +35,7 @@ spec:
     - name: dragonfly
       namespace: database
   interval: 1h
-  path: ./kubernetes/main/apps/database/dragonfly/cluster
+  path: ./kubernetes/apps/database/dragonfly/cluster
   prune: true
   retryInterval: 2m
   sourceRef:
