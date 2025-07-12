@@ -1,0 +1,145 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authentik-templates
+data:
+  mail_account_confirmation.html: |
+    {% extends 'email/base.html' %}
+
+    {% load authentik_stages_email %}
+    {% load i18n %}
+
+    {% block content %}
+    <tr>
+    <td align="center">
+        <h1>
+        {% trans 'Willkommen!' %}
+        </h1>
+    </td>
+    </tr>
+    <tr>
+    <td align="center">
+        <table border="0">
+        <tr>
+            <td align="center" style="max-width: 300px; padding: 20px 0; color: #212124;">
+            {% trans "Schön, dass Du dabei bist! Bitte bestätige zunächst Dein Konto. Klicke dazu einfach auf den Button unten." %}
+            </td>
+        </tr>
+        <tr>
+            <td align="center" class="btn btn-primary">
+            <a id="confirm" href="{{ url }}" rel="noopener noreferrer" target="_blank">{% trans 'Konto bestätigen' %}</a>
+            </td>
+        </tr>
+        </table>
+    </td>
+    </tr>
+    <td>
+    {% endblock %}
+
+    {% block sub_content %}
+    <tr>
+    <td style="padding: 20px; font-size: 12px; color: #212124;word-break: break-all; overflow-wrap: break-word;" align="center">
+        {% blocktrans with url=url %}
+        Falls der Button nicht funktioniert, kopiere den folgenden Link und füge ihn in Deinen Browser ein: {{ url }}
+        {% endblocktrans %}
+    </td>
+    </tr>
+    {% endblock %}
+  mail_password_reset.html: |
+    {% extends "email/base.html" %}
+
+    {% load i18n %}
+    {% load humanize %}
+
+    {% block content %}
+    <tr>
+    <td align="center">
+        <h1>
+        {% blocktrans with username=user.username %}
+        Hallo {{ username }},
+        {% endblocktrans %}
+        </h1>
+    </td>
+    </tr>
+    <tr>
+    <td align="center">
+        <table border="0">
+        <tr>
+            <td align="center" style="max-width: 300px; padding: 20px 0; color: #212124;">
+            {% blocktrans %}
+            Du hast kürzlich angefragt, das Passwort für Deinen authentik-Zugang zu ändern. Klicke auf den Button unten, um ein neues Passwort festzulegen.
+            {% endblocktrans %}
+            </td>
+        </tr>
+        <tr>
+            <td align="center" class="btn btn-primary">
+            <a id="confirm" href="{{ url }}" rel="noopener noreferrer" target="_blank">{% trans 'Passwort zurücksetzen' %}</a>
+            </td>
+        </tr>
+        </table>
+    </td>
+    </tr>
+    {% endblock %}
+
+    {% block sub_content %}
+    <tr>
+    <td style="padding: 20px; font-size: 12px; color: #212124;" align="center">
+        {% blocktrans with expires=expires|naturaltime %}
+        Wenn Du diese Passwortänderung nicht angefordert hast, kannst Du diese E-Mail ignorieren. Der obige Link ist gültig für {{ expires }}.
+        {% endblocktrans %}
+    </td>
+    </tr>
+    {% endblock %}
+  mail_event_notification.html: |
+    {% extends "email/base.html" %}
+
+    {% load i18n %}
+
+    {% block content %}
+    <tr>
+    <td align="center">
+        <h1>
+        {{ title }}
+        </h1>
+    </td>
+    </tr>
+    <tr>
+    <td align="center">
+        <table border="0">
+        <tr>
+            <td align="center" style="max-width: 300px; padding: 20px 0; color: #212124;">
+            {{ body }}
+            </td>
+        </tr>
+        {% if key_value %}
+        <tr>
+            <td>
+            <table class="properties-table" width="100%">
+                <tbody>
+                {% for key, value in key_value.items %}
+                <tr>
+                    <td class="td-right">{{ key }}</td>
+                    <td class="td-left">{{ value }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </td>
+        </tr>
+        {% endif %}
+        </table>
+    </td>
+    </tr>
+    {% endblock %}
+
+    {% block sub_content %}
+    {% if source %}
+    <tr>
+    <td style="padding: 20px; font-size: 12px; color: #212124;" align="center">
+        {% blocktranslate with name=source.from %}
+        Diese E-Mail wurde über den Benachrichtigungsdienst <code>{{ name }}</code> versendet.
+        {% endblocktranslate %}
+    </td>
+    </tr>
+    {% endif %}
+    {% endblock %}
