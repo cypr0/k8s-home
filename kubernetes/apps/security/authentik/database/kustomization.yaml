@@ -5,5 +5,4 @@ namespace: security
 resources:
   - ./cluster.yaml
   - ./externalsecret.yaml
-  - ./pv.yaml
   - ./scheduledbackup.yaml
