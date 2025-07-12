@@ -1,0 +1,12 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: storage-nfs
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: ${SECRET_NAS_SERVER}
+  share: /mnt/hdd/k8s/nfs
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+mountOptions: ["nfsvers=4.2", "nconnect=16", "hard", "noatime"]

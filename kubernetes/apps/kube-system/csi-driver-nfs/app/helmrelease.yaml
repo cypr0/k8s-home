@@ -30,17 +30,3 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  values:
-    storageClass:
-      create: true
-      name: store-nfs
-      parameters:
-        server: ${SECRET_NAS_SERVER}
-        share: /mnt/hdd/k8s/nfs
-      mountOptions:
-        - nfsvers=4.2
-        - nconnect=16
-        - hard
-        - noatime
-      reclaimPolicy: Delete
-      volumeBindingMode: Immediate
