@@ -11,7 +11,7 @@ spec:
   instances: 1
   storage:
     size: 20Gi
-    storageClass: cnpg-authentik-nfs
+    storageClass: store-nfs
   postgresql:
     parameters:
       max_connections: "200"
