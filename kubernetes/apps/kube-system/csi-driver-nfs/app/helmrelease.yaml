@@ -35,7 +35,7 @@ spec:
       create: true
       name: store-nfs
       parameters:
-        server: ${SECRET_NFS_SERVER}
+        server: ${SECRET_NAS_SERVER}
         share: /mnt/hdd/k8s/nfs
       mountOptions:
         - nfsvers=4.2
