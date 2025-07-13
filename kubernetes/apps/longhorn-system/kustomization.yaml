@@ -6,4 +6,4 @@ namespace: longhorn-system
 components:
   - ../../components/common
 resources:
-  - .//ks.yaml
+  - ./longhorn/ks.yaml
