@@ -1,0 +1,86 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: paperless-cronjob-fix-ownership
+spec:
+  schedule: "*/15 * * * *" # Every 15 minutes
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 60
+      template:
+        spec:
+          containers:
+            - name: paperless-fix-ownership
+              image: alpine/curl:8.14.1
+              envFrom:
+                - secretRef:
+                    name: paperless-secret
+              command:
+                - sh
+                - -c
+                - |
+
+                  echo "🔍 Installing jq..."
+                  apk add --no-cache jq > /dev/null 2>&1
+
+                  echo "🔍 Starting Paperless bulk permissions fix..."
+                  PAPERLESS_URL="http://paperless-paperless-ngx.default.svc.cluster.local"
+                  OWNER_ID="4"  # User ID for assignment
+                  GROUP_ID="2"  # Group ID for assignment
+                  AUTH_HEADER="Authorization: Token $PAPERLESS_API_TOKEN"
+
+                  # Function to update permissions using PATCH requests instead of bulk API
+                  update_permissions_individually() {
+                      ITEM_TYPE=$1  # Either "tags", "correspondents", or "document_types"
+                      echo "🔍 Checking for new $ITEM_TYPE..."
+
+                      # Fetch all items that are not yet assigned to the group
+                      ITEM_IDS=$(curl -s -H "$AUTH_HEADER" -H "Content-Type: application/json" "$PAPERLESS_URL/api/$ITEM_TYPE/" | jq -r '.results[] | select(.ownership != "group") | .id')
+
+                      if [ -z "$ITEM_IDS" ]; then
+                          echo "✅ No new $ITEM_TYPE found, exiting."
+                          return
+                      fi
+
+                      for ITEM_ID in $ITEM_IDS; do
+                          echo "🔄 Updating permissions for $ITEM_TYPE ID $ITEM_ID..."
+
+                          JSON_PAYLOAD=$(cat <<EOF
+                  {
+                    "owner": $OWNER_ID,
+                    "set_permissions": {
+                      "view": { "users": [], "groups": ["$GROUP_ID"] },
+                      "change": { "users": [], "groups": ["$GROUP_ID"] }
+                    }
+                  }
+                  EOF
+                  )
+
+                          echo "📝 JSON Payload for $ITEM_TYPE ID $ITEM_ID:"
+                          echo "$JSON_PAYLOAD" | jq .  # Pretty print JSON
+
+                          RESPONSE=$(curl -s -o response.json -w "%{http_code}" -X PATCH -H "$AUTH_HEADER" -H "Content-Type: application/json" \
+                            "$PAPERLESS_URL/api/$ITEM_TYPE/$ITEM_ID/" -d "$JSON_PAYLOAD")
+
+                          echo "📜 API Response for $ITEM_TYPE ID $ITEM_ID:"
+                          cat response.json | jq .  # Pretty print API response
+
+                          if [ "$RESPONSE" -ne 200 ]; then
+                              echo "❌ Error updating $ITEM_TYPE ID $ITEM_ID! HTTP Status: $RESPONSE"
+                          else
+                              echo "✅ Successfully updated permissions for $ITEM_TYPE ID $ITEM_ID"
+                          fi
+                      done
+
+                      echo "✅ Permissions updated successfully for all $ITEM_TYPE!"
+                  }
+
+                  # Fix permissions for tags, correspondents, and document types
+                  update_permissions_individually "tags"
+                  update_permissions_individually "correspondents"
+                  update_permissions_individually "document_types"
+
+                  echo "✅ Paperless permissions fix completed!"
+          restartPolicy: OnFailure
