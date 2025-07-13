@@ -39,6 +39,11 @@ spec:
   interval: 1h
   path: ./kubernetes/apps
   prune: true
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+        optional: false
   retryInterval: 2m
   sourceRef:
     kind: GitRepository
