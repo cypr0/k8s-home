@@ -1,0 +1,14 @@
+---
+apiVersion: longhorn.io/v1beta2
+kind: RecurringJob
+metadata:
+  name: snapshot-6h
+spec:
+  name: snapshot-6h
+  task: snapshot
+  cron: "0 */6 * * *"
+  retain: 7
+  concurrency: 1
+  groups: []
+  labels:
+    longhorn-job-type: snapshot
