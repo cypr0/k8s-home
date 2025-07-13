@@ -4,7 +4,7 @@ kind: ScheduledBackup
 metadata:
   name: cnpg-authentik-backup-weekly
 spec:
-  schedule: "0 2 * * 1"  # every Monday at 2 AM
+  schedule: "0 2 * * 1"  # Every Monday at 2 AM
   immediate: false
   backupOwnerReference: self
   cluster:
