@@ -142,9 +142,6 @@ spec:
           - name: external
             namespace: kube-system
             sectionName: https
-          - backendRefs:
-              - identifier: paperless-ngx
-                port: *port
     persistence:
       library:
         enabled: true
