@@ -1,0 +1,40 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: longhorn-postgres
+provisioner: driver.longhorn.io
+allowVolumeExpansion: true
+parameters:
+  numberOfReplicas: "1" # No replication
+  staleReplicaTimeout: "2880"
+  fromBackup: ""
+  fsType: "ext4"
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: longhorn-standard
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: driver.longhorn.io
+allowVolumeExpansion: true
+parameters:
+  numberOfReplicas: "2" # Sparser than 3, but more tolerant to node failure
+  staleReplicaTimeout: "2880"
+  fromBackup: ""
+  fsType: "ext4"
+  recurringJobSelector: '[{ "name":"snapshot-6h", "isGroup":false }, { "name":"backup-daily", "isGroup":false }]'
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: longhorn-ha
+provisioner: driver.longhorn.io
+allowVolumeExpansion: true
+parameters:
+  numberOfReplicas: "3" # Maximum redundancy
+  staleReplicaTimeout: "2880"
+  fromBackup: ""
+  fsType: "ext4"
+  recurringJobSelector: '[{ "name":"snapshot-hourly", "isGroup":false }, { "name":"backup-6h", "isGroup":false }]'
