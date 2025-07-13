@@ -61,3 +61,14 @@ spec:
   resources:
     requests:
       storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperless-ai-pvc
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: longhorn-standard
+  resources:
+    requests:
+      storage: 5Gi

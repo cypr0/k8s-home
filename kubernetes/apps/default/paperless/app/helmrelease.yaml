@@ -60,7 +60,7 @@ spec:
                     }
               PAPERLESS_TASK_WORKERS: 2
               PAPERLESS_TIKA_ENABLED: 1
-              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg.default.svc.cluster.local:3000
+              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg.default.svc.cluster.local:3030
               PAPERLESS_TIKA_ENDPOINT: http://paperless-tika.default.svc.cluster.local:9998
               PAPERLESS_TIME_ZONE: ${TIMEZONE}
               PAPERLESS_TRUSTED_PROXIES: 10.96.0.0/16,10.69.0.0/16,192.168.0.0/16
@@ -88,6 +88,7 @@ spec:
               - gotenberg
               - "--chromium-disable-javascript=true"
               - "--chromium-allow-list=file:///tmp/.*"
+              - "--api-port=3030"
             probes:
               liveness:
                 enabled: true
@@ -118,17 +119,116 @@ spec:
               runAsGroup: 3000
               fsGroup: 3000
               runAsNonRoot: true
+          paperless-ai:
+            image:
+              repository: docker.io/clusterzx/paperless-ai
+              tag: 3.0.7
+            env:
+              PAPERLESS_AI_INITIAL_SETUP: "no"
+              PAPERLESS_API_URL: "http://paperless-paperless-ngx.default.svc.cluster.local/api"
+              AI_PROVIDER: "custom"
+              SCAN_INTERVAL: "*/60 * * * *"
+              SYSTEM_PROMPT: |
+                Du bist ein spezialisiertes Analysemodell zur Dokumentenauswertung. Analysiere den Inhalt des Dokuments und extrahiere die folgenden Informationen in einem **strukturierten JSON-Objekt**:
+
+                ### Struktur:
+
+                1. **title**:
+                  Erstelle einen kurzen, prägnanten Titel auf **Deutsch**. Der Titel soll das Dokument eindeutig identifizieren. Bei Rechnungen, Bescheiden oder amtlichen Schreiben möglichst mit Nummer, Betreff oder Zeitraum.
+
+                2. **correspondent**:
+                  Gib den **Absender oder die Institution** an, **ohne Adresse**. Verwende die **deutsche Kurzform** (z. B. „Techniker Krankenkasse“, nicht „Die Techniker Krankenkasse, Zweigstelle XY“). Stimme, falls bekannt, mit bestehenden Namen überein.
+
+                3. **tags**:
+                  Weise dem Dokument bis zu **vier thematisch passende Schlagwörter auf Deutsch** zu.
+                  Bevorzuge vorhandene Tags. Erstelle **neue Tags nur dann**, wenn kein passender existiert.
+                  Spezialregel: Verwende den Tag **„Honorar“ nur dann**, wenn der Nutzer **Geld erhält** (z. B. Zahlungseingang, eigene Rechnung, Vergütungsmitteilung). **Nicht vergeben**, wenn der Nutzer eine Rechnung zahlen muss.
+
+                4. **document_date**:
+                  Gib das **relevante Datum** im Format `YYYY-MM-DD` an (z. B. Ausstellungsdatum, Rechnungsdatum, Datum des Schreibens).
+
+                5. **language**:
+                  Sprache des Dokuments:
+                  - `de` = Deutsch
+                  - `en` = Englisch
+                  - `und` = unklar
+
+                6. **document_type**:
+                  Wechsle **ausschließlich** zwischen den folgenden erlaubten Dokumenttypen.
+                  **Erstelle niemals neue Dokumenttypen. Verwende keine anderen Begriffe.**
+                  Wenn kein Typ eindeutig passt, verwende **„Dokument“** als generische Auffangkategorie.
+
+                ### Zulässige Dokumenttypen (Whitelist):
+                - Bescheid
+                - Dokument
+                - Gehaltsabrechnung
+                - Kontoauszug
+                - Korrespondenz
+                - LSt-Bescheinigung
+                - NK-Abrechnung
+                - Rechnung
+                - Spendennachweis
+                - Vertrag
+                - Zeugnis
+                - Zertifikate
+
+                ### Ausgabeformat:
+                Antwort ausschließlich im folgenden **JSON-Format** – **keine Kommentare, kein Fließtext**:
+
+                {
+                  "title": "Rechnung 2024-0178 von Telekom",
+                  "correspondent": "Telekom",
+                  "tags": ["Internet", "Rechnung"],
+                  "document_date": "2024-03-14",
+                  "language": "de",
+                  "document_type": "Rechnung"
+                }
+              PROCESS_PREDEFINED_DOCUMENTS: "yes"
+              TAGS: "Neu"
+              ADD_AI_PROCESSED_TAG: "yes"
+              AI_PROCESSED_TAG_NAME: "KI"
+              USE_PROMPT_TAGS: "no"
+              PROMPT_TAGS: ""
+              USE_EXISTING_DATA: "yes"
+              ACTIVATE_CUSTOM_FIELDS: "no"
+              CUSTOM_API_URL: "https://openrouter.ai/api/v1"
+              CUSTOM_MODEL: "google/gemini-2.5-flash"
+            envFrom:
+              - secretRef:
+                  name: paperless-secret
+            resources:
+              requests:
+                cpu: 500m
+                memory: 512Mi
+              limits:
+                cpu: 700m
+                memory: 2Gi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
     service:
       paperless-ngx:
         controller: main
         ports:
           http:
             port: *port
-      gotenberg:
+      paperless-ai:
         controller: main
         ports:
           http:
             port: 3000
+      gotenberg:
+        controller: main
+        ports:
+          http:
+            port: 3030
       tika:
         controller: main
         ports:
@@ -139,13 +239,24 @@ spec:
         hostnames:
           - paperless.${SECRET_DOMAIN}
         parentRefs:
-          - name: external
+          - name: internal
             namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
               - name: paperless-paperless-ngx
                 port: 80
+      paperless-ai:
+        hostnames:
+          - paperless-ai.${SECRET_DOMAIN}
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: paperless-paperless-ai
+                port: 3000
     persistence:
       library:
         enabled: true
@@ -175,3 +286,24 @@ spec:
           main:
             tika:
               - path: /tmp
+      ai-config:
+        enabled: true
+        existingClaim: paperless-ai-pvc
+        advancedMounts:
+          main:
+            paperless-ai:
+              - path: /app/data
+      ai-tmp:
+        enabled: true
+        type: emptyDir
+        advancedMounts:
+          main:
+            paperless-ai:
+              - path: /tmp
+      ai-logs:
+        enabled: true
+        type: emptyDir
+        advancedMounts:
+          main:
+            paperless-ai:
+              - path: /app/logs
