@@ -1,0 +1,115 @@
+---
+use_default_settings: true
+
+general:
+  debug: false
+  instance_name:  "SearXNG"
+  privacypolicy_url: false
+  donation_url: false
+  contact_url: false
+  enable_metrics: true
+  open_metrics: ''
+
+brand:
+  issue_url: https://github.com/searxng/searxng/issues
+  docs_url: https://docs.searxng.org
+  public_instances: http://open-webui-searxng.default.svc.cluster.local:8090
+  wiki_url: https://github.com/searxng/searxng/wiki
+
+search:
+  safe_search: 0
+  autocomplete: "duckduckgo"
+  favicon_resolver: "duckduckgo"
+  default_lang: "de"
+  ban_time_on_fail: 5
+  max_page: 0
+  max_ban_time_on_fail: 120
+  suspended_times:
+    SearxEngineAccessDenied: 86400
+    SearxEngineCaptcha: 86400
+    SearxEngineTooManyRequests: 3600
+    cf_SearxEngineCaptcha: 1296000
+    cf_SearxEngineAccessDenied: 86400
+    recaptcha_SearxEngineCaptcha: 604800
+  formats:
+    - html
+
+server:
+  limiter: true
+  image_proxy: true
+  method: GET
+  public_instance: false
+  default_http_headers:
+    X-Content-Type-Options : nosniff
+    X-Download-Options : noopen
+    X-Robots-Tag : noindex, nofollow
+    Referrer-Policy : no-referrer
+
+redis:
+  url: redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379
+
+ui:
+  static_use_hash: false
+  default_locale: "de"
+  query_in_title: false
+  infinite_scroll: true
+  center_alignment: false
+  cache_url: https://web.archive.org/web/
+  default_theme: simple
+  theme_args:
+    simple_style: auto
+  search_on_category_select: true
+  hotkeys: default
+  url_formatting: pretty
+  results_on_new_tab: true
+
+outgoing:
+  request_timeout: 2.0
+  max_request_timeout: 10.0
+  pool_connections: 100
+  pool_maxsize: 10
+  enable_http2: true
+  useragent_suffix: mail@${SECRET_DOMAIN}
+  keepalive_expiry: 5.0
+  max_redirects: 30
+  using_tor_proxy: false
+
+categories_as_tabs:
+  general:
+  images:
+  videos:
+  news:
+  map:
+  music:
+  it:
+  science:
+  files:
+  social media:
+
+plugins:
+  searx.plugins.calculator.SXNGPlugin:
+    active: true
+  searx.plugins.hash_plugin.SXNGPlugin:
+    active: true
+  searx.plugins.self_info.SXNGPlugin:
+    active: true
+  searx.plugins.tracker_url_remover.SXNGPlugin:
+    active: true
+  searx.plugins.unit_converter.SXNGPlugin:
+    active: true
+  searx.plugins.ahmia_filter.SXNGPlugin:
+    active: true
+  searx.plugins.hostnames.SXNGPlugin:
+    active: true
+  searx.plugins.oa_doi_rewrite.SXNGPlugin:
+    active: true
+  searx.plugins.tor_check.SXNGPlugin:
+    active: true
+
+hostnames:
+  high_priority:
+    - (.*)\/blog\/(.*)
+    - (.*\.)?wikipedia.org$
+    - (.*\.)?github.com$
+    - (.*\.)?docker.com$
+    - (.*\.)?stackoverflow.com$
