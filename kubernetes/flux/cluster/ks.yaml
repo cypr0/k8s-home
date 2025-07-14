@@ -44,6 +44,9 @@ spec:
       - name: cluster-secrets
         kind: Secret
         optional: false
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: false
   retryInterval: 2m
   sourceRef:
     kind: GitRepository
@@ -65,6 +68,9 @@ spec:
             substituteFrom:
               - name: cluster-secrets
                 kind: Secret
+                optional: false
+              - name: cluster-settings
+                kind: ConfigMap
                 optional: false
       target:
         group: kustomize.toolkit.fluxcd.io
