@@ -9,9 +9,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: open-webui-db
-      namespace: default
   interval: 1h
   path: ./kubernetes/apps/default/open-webui/database
   prune: true
