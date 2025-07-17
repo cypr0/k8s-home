@@ -40,7 +40,7 @@ spec:
               OPENAI_API_BASE_URL: https://openrouter.ai/api/v1
               ENABLE_RAG_WEB_SEARCH: true
               RAG_WEB_SEARCH_ENGINE: searxng
-              SEARXNG_QUERY_URL: http://oben-webui-searxng.default.svc.cluster.local:8080/search?q=<query>
+              SEARXNG_QUERY_URL: http://open-webui-searxng.default.svc.cluster.local:8080/search?q=<query>
               ENABLE_WEBSOCKET_SUPPORT: "true"
               WEBSOCKET_MANAGER: "redis"
               OAUTH_PROVIDER_NAME: Authentik
@@ -113,7 +113,7 @@ spec:
               UWSGI_WORKERS: "1"
             envFrom:
               - secretRef:
-                  name: oben-webui-secret
+                  name: open-webui-secret
             probes:
               liveness: &probes
                 enabled: true
