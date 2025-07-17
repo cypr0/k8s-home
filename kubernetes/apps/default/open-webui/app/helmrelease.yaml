@@ -99,7 +99,7 @@ spec:
               runAsNonRoot: false
               runAsUser: 1000
               runAsGroup: 0
-              fsGroup: 3000
+              fsGroup: 0
           searxng:
             image:
               repository: ghcr.io/searxng/searxng
