@@ -180,10 +180,10 @@ spec:
           main:
             open-webui:
               - path: /data
-                subPath: /data/open-webui
+                subPath: data/open-webui
             elasticsearch:
               - path: /usr/share/elasticsearch/data
-                subPath: /data/elasticsearch
+                subPath: data/elasticsearch
       searxng-config:
         enabled: true
         type: configMap
