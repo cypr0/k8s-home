@@ -95,6 +95,11 @@ spec:
               xpack.security.enabled: "false"
               discovery.type: "single-node"
               ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+            securityContext:
+              runAsNonRoot: false
+              runAsUser: 1000
+              runAsGroup: 0
+              fsGroup: 3000
           searxng:
             image:
               repository: ghcr.io/searxng/searxng
