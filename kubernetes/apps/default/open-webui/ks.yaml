@@ -9,6 +9,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: cloudnative-pg
+      namespace: database
   interval: 1h
   path: ./kubernetes/apps/default/open-webui/database
   prune: true
