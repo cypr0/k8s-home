@@ -42,6 +42,7 @@ spec:
   postBuild:
     substituteFrom:
       - name: cluster-settings
+        namespace: flux-system
         kind: ConfigMap
         optional: false
       - name: cluster-secrets
@@ -67,6 +68,7 @@ spec:
           postBuild:
             substituteFrom:
               - name: cluster-settings
+                namespace: flux-system
                 kind: ConfigMap
                 optional: false
               - name: cluster-secrets
