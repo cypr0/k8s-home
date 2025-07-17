@@ -95,11 +95,6 @@ spec:
               xpack.security.enabled: "false"
               discovery.type: "single-node"
               ES_JAVA_OPTS: "-Xms512m -Xmx512m"
-            securityContext:
-              runAsNonRoot: false
-              runAsUser: 3000
-              runAsGroup: 3000
-              fsGroup: 3000
           searxng:
             image:
               repository: ghcr.io/searxng/searxng
@@ -146,16 +141,6 @@ spec:
                   - SETGID
                   - SETUID
                   - DAC_OVERRIDE
-        initContainers:
-          init-chmod-pvc:
-            image:
-              repository: docker.io/library/alpine
-              tag: 3.22.0@sha256:8a1f59ffb675680d47db6337b49d22281a139e9d709335b492be023728e11715
-            command: ["/bin/sh"]
-            args: ["-c", "mkdir -p /usr/share/elasticsearch && chmod 0770 /usr/share/elasticsearch && chown 3000:3000 /usr/share/elasticsearch"]
-            securityContext:
-              runAsUser: 0
-              runAsGroup: 0
     service:
       open-webui:
         controller: main
@@ -194,9 +179,6 @@ spec:
               - path: /data
                 subPath: data/open-webui
             elasticsearch:
-              - path: /usr/share/elasticsearch
-                subPath: data/elasticsearch
-            init-chmod-pvc:
               - path: /usr/share/elasticsearch
                 subPath: data/elasticsearch
       searxng-config:
