@@ -13,7 +13,7 @@ general:
 brand:
   issue_url: https://github.com/searxng/searxng/issues
   docs_url: https://docs.searxng.org
-  public_instances: http://open-webui-searxng.default.svc.cluster.local:8090
+  public_instances: http://open-webui-searxng.default.svc.cluster.local:8080
   wiki_url: https://github.com/searxng/searxng/wiki
 
 search:

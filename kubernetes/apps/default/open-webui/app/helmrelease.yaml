@@ -32,6 +32,7 @@ spec:
             env:
               CORS_ALLOW_ORIGIN: https://gpt.${SECRET_DOMAIN}
               WEBUI_URL: https://gpt.${SECRET_DOMAIN}
+              PORT: 8090
               ENABLE_SIGNUP: true
               ENABLE_OAUTH_SIGNUP: true
               DEFAULT_LOCALE: de
@@ -42,7 +43,7 @@ spec:
               OPENAI_API_BASE_URL: https://openrouter.ai/api/v1
               ENABLE_RAG_WEB_SEARCH: true
               RAG_WEB_SEARCH_ENGINE: searxng
-              SEARXNG_QUERY_URL: http://open-webui-searxng.default.svc.cluster.local:8090/search?q=<query>
+              SEARXNG_QUERY_URL: http://open-webui-searxng.default.svc.cluster.local:8080/search?q=<query>
               ENABLE_WEBSOCKET_SUPPORT: "true"
               WEBSOCKET_MANAGER: "redis"
               OAUTH_PROVIDER_NAME: Authentik
@@ -73,15 +74,15 @@ spec:
           searxng:
             image:
               repository: ghcr.io/searxng/searxng
-              tag: 2025.6.6-33891e5@sha256:64e7df5acb7399caafc457096082ea662639ef8742b5e37015bc1c2a9451ba0d
+              tag: 2025.7.18-ff2e0ea@sha256:c1ad2bd15604fc3c783cf67666371dda8df9f3a078fef1dba67057bf766b8b30
             command:
               - /usr/local/searxng/venv/bin/uwsgi
               - --master
               - /usr/local/searxng/.template/uwsgi.ini
             env:
               SEARXNG_BASE_URL: http://open-webui-searxng.default.svc.cluster.local
-              SEARXNG_URL: http://open-webui-searxng.default.svc.cluster.local:8090
-              SEARXNG_PORT: &httpPort 8090
+              SEARXNG_URL: http://open-webui-searxng.default.svc.cluster.local:8080
+              SEARXNG_PORT: &httpPort 8080
               UWSGI_WORKERS: "1"
             envFrom:
               - secretRef:
@@ -121,7 +122,7 @@ spec:
         controller: main
         ports:
           http:
-            port: 8080
+            port: 8090
       searxng:
         controller: main
         ports:
@@ -138,7 +139,7 @@ spec:
         rules:
           - backendRefs:
               - name: open-webui
-                port: 8080
+                port: 8090
     persistence:
       data:
         enabled: true
