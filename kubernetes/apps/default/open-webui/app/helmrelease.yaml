@@ -42,7 +42,7 @@ spec:
               OPENAI_API_BASE_URL: https://openrouter.ai/api/v1
               ENABLE_RAG_WEB_SEARCH: true
               RAG_WEB_SEARCH_ENGINE: searxng
-              SEARXNG_QUERY_URL: http://open-webui-searxng.default.svc.cluster.local:8080/search?q=<query>
+              SEARXNG_QUERY_URL: http://open-webui-searxng.default.svc.cluster.local:8090/search?q=<query>
               ENABLE_WEBSOCKET_SUPPORT: "true"
               WEBSOCKET_MANAGER: "redis"
               OAUTH_PROVIDER_NAME: Authentik
@@ -52,8 +52,8 @@ spec:
               OAUTH_SCOPES: openid email profile
               OAUTH_UPDATE_PICTURE_ON_LOGIN: false
               TZ: ${TIMEZONE}
-              VECTOR_DB: elasticsearch
-              ELASTICSEARCH_URL: http://open-webui-elasticsearch.default.svc.cluster.local:9200
+              VECTOR_DB: pgvector
+              PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH: 1536
               CONTENT_EXTRACTION_ENGINE: tika
               TIKA_SERVER_URL: http://paperless-tika.default.svc.cluster.local:9998
             envFrom:
@@ -70,36 +70,6 @@ spec:
               runAsUser: 3000
               runAsGroup: 3000
               fsGroup: 3000
-          elasticsearch:
-            image:
-              repository: docker.elastic.co/elasticsearch/elasticsearch
-              tag: 9.0.3
-            resources:
-              requests:
-                cpu: 100m
-                memory: 250Mi
-              limits:
-                memory: 4096Mi
-            probes:
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
-            env:
-              TZ: ${TIMEZONE}
-              xpack.security.enabled: "false"
-              discovery.type: "single-node"
-              ES_JAVA_OPTS: "-Xms512m -Xmx512m"
-            securityContext:
-              runAsNonRoot: false
-              runAsUser: 1000
-              runAsGroup: 0
-              fsGroup: 0
           searxng:
             image:
               repository: ghcr.io/searxng/searxng
@@ -152,11 +122,6 @@ spec:
         ports:
           http:
             port: 8080
-      elasticsearch:
-        controller: main
-        ports:
-          http:
-            port: 9200
       searxng:
         controller: main
         ports:
@@ -182,10 +147,7 @@ spec:
           main:
             open-webui:
               - path: /data
-                subPath: data/open-webui
-            elasticsearch:
-              - path: /usr/share/elasticsearch
-                subPath: data/elasticsearch
+                subPath: data
       searxng-config:
         enabled: true
         type: configMap

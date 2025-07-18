@@ -1,0 +1,11 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: open-webui-db-rag
+spec:
+  cluster:
+    name: cnpg-open-webui
+  name: openwebuidbrag
+  owner: openwebuiusr
+extensions:
+  - vector
