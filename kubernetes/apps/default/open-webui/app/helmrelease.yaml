@@ -50,7 +50,7 @@ spec:
               OPENID_PROVIDER_URL: https://id.${SECRET_DOMAIN}/application/o/open-webui/.well-known/openid-configuration
               OPENID_REDIRECT_URI: https://gpt.${SECRET_DOMAIN}/oauth/oidc/callback
               OAUTH_SCOPES: openid email profile
-              OAUTH_UPDATE_PICTURE_ON_LOGIN: false
+              OAUTH_UPDATE_PICTURE_ON_LOGIN: true
               TZ: ${TIMEZONE}
               VECTOR_DB: pgvector
               PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH: 1536
