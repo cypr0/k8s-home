@@ -3,9 +3,9 @@ kind: Database
 metadata:
   name: open-webui-db-rag
 spec:
-  cluster:
-    name: cnpg-open-webui
   name: openwebuidbrag
   owner: openwebuiusr
-extensions:
-  - vector
+  cluster:
+    name: cnpg-open-webui
+  extensions:
+  - name: vector
