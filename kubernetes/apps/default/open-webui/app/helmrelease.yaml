@@ -32,7 +32,7 @@ spec:
             env:
               CORS_ALLOW_ORIGIN: https://gpt.${SECRET_DOMAIN}
               WEBUI_URL: https://gpt.${SECRET_DOMAIN}
-              PORT: 8090
+              PORT: &webuipPort 8090
               ENABLE_SIGNUP: true
               ENABLE_OAUTH_SIGNUP: true
               DEFAULT_LOCALE: de
@@ -75,14 +75,10 @@ spec:
             image:
               repository: ghcr.io/searxng/searxng
               tag: 2025.7.18-ff2e0ea@sha256:c1ad2bd15604fc3c783cf67666371dda8df9f3a078fef1dba67057bf766b8b30
-            command:
-              - /usr/local/searxng/venv/bin/uwsgi
-              - --master
-              - /usr/local/searxng/.template/uwsgi.ini
             env:
               SEARXNG_BASE_URL: http://open-webui-searxng.default.svc.cluster.local
               SEARXNG_URL: http://open-webui-searxng.default.svc.cluster.local:8080
-              SEARXNG_PORT: &httpPort 8080
+              SEARXNG_PORT: &searxngPort 8080
               UWSGI_WORKERS: "1"
             envFrom:
               - secretRef:
@@ -94,7 +90,7 @@ spec:
                 spec:
                   httpGet:
                     path: /stats
-                    port: *httpPort
+                    port: *searxngPort
                   initialDelaySeconds: 15
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -122,12 +118,12 @@ spec:
         controller: main
         ports:
           http:
-            port: 8090
+            port: *webuiPort
       searxng:
         controller: main
         ports:
           http:
-            port: *httpPort
+            port: *searxngPort
     route:
       open-webui:
         hostnames:
@@ -139,7 +135,7 @@ spec:
         rules:
           - backendRefs:
               - name: open-webui
-                port: 8090
+                port: *webuiPort
     persistence:
       data:
         enabled: true
