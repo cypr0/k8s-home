@@ -68,9 +68,9 @@ spec:
                 memory: 4Gi
             securityContext:
               runAsNonRoot: false
-              runAsUser: 3000
-              runAsGroup: 3000
-              fsGroup: 3000
+              runAsUser: 0
+              runAsGroup: 0
+              fsGroup: 0
           searxng:
             image:
               repository: ghcr.io/searxng/searxng
