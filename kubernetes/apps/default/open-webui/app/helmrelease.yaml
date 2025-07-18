@@ -32,7 +32,7 @@ spec:
             env:
               CORS_ALLOW_ORIGIN: https://gpt.${SECRET_DOMAIN}
               WEBUI_URL: https://gpt.${SECRET_DOMAIN}
-              PORT: &webuipPort 8090
+              PORT: &webuiPort 8090
               ENABLE_SIGNUP: true
               ENABLE_OAUTH_SIGNUP: true
               DEFAULT_LOCALE: de
