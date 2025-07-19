@@ -286,7 +286,7 @@ spec:
           - name: nextcloud-cronjob-missingindices
             image: docker.io/library/nextcloud:31.0.7-fpm-alpine
             command: ["/bin/sh", "-c"]
-            args: ["php /var/www/html/occ maintenance:mode --on && php /var/www/html/occ db:add-missing-indices && php /var/www/html/occ maintenance:mode --off"]
+            args: ["sleep 10; until php /var/www/html/occ status --output json | grep -q '\"installed\":true'; do sleep 10; done && php /var/www/html/occ maintenance:mode --on && php /var/www/html/occ db:add-missing-indices && php /var/www/html/occ maintenance:mode --off"]
             volumeMounts:
             - name: app-config
               mountPath: /var/www/html
