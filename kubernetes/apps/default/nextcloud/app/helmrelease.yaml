@@ -150,7 +150,7 @@ spec:
               tag: v1.1.2
             env:
               - name: NEXTCLOUD_URL
-                value: "cloud.${SECRET_DOMAIN}"
+                value: "nextcloud-nginx.default.svc.cluster.local:8080"
               - name: JWT_SECRET_KEY
                 valueFrom:
                   secretKeyRef:
