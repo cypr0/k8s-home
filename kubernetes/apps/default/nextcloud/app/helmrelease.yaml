@@ -215,7 +215,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: nginx
+              - name: nextcloud-nginx
                 port: 8080
       collabora:
         hostnames:
@@ -226,7 +226,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: collabora
+              - name: nextcloud-collabora
                 port: 9980
     configMaps:
       nextcloud-config:
