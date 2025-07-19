@@ -7,6 +7,7 @@ components:
   - ../../components/common
 resources:
   - ./echo/ks.yaml
+  - ./immich/ks.yaml
 #  - ./nextcloud/ks.yaml
   - ./open-webui/ks.yaml
   - ./paperless/ks.yaml
