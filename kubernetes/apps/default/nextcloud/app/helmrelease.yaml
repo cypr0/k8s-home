@@ -98,6 +98,10 @@ spec:
             image:
               repository: nginxinc/nginx-unprivileged
               tag: 1.29-alpine
+            securityContext:
+              runAsUser: 3000
+              runAsGroup: 3000
+              fsGroup: 3000
           clamav:
             image:
               repository: clamav/clamav
