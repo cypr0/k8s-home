@@ -20,6 +20,7 @@ spec:
     defaultPodOptions:
       annotations:
         reloader.stakater.com/auto: "true"
+        secret.reloader.stakater.com/reload: immich-secret
       securityContext:
         runAsUser: 3000
         runAsGroup: 3000
