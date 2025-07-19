@@ -146,7 +146,7 @@ spec:
           DB_HOSTNAME: "cnpg-immich-rw.default.svc.cluster.local"
           DB_PORT: "5432"
           DB_DATABASE_NAME: "immichdb"
-          DB_VECTOR_EXTENSION: "pgvector"
+          DB_VECTOR_EXTENSION: "vectorchord"
       immich-json:
         enabled: true
         data:
