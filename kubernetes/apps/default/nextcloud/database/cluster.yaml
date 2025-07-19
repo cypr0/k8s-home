@@ -3,9 +3,9 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: cnpg-open-webui
+  name: cnpg-nextcloud
 spec:
-  description: Postgresql cluster for Open WebUI
+  description: Postgresql cluster for Nextcloud
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
   imageName: ghcr.io/cloudnative-pg/postgresql:17.5
   instances: 1
@@ -23,7 +23,7 @@ spec:
       default_statistics_target: "100"
       random_page_cost: "1.1"
       effective_io_concurrency: "200"
-      work_mem: 2621kB
+      work_mem: 5242kB
       huge_pages: off
       min_wal_size: 1GB
       max_wal_size: 4GB
@@ -33,11 +33,12 @@ spec:
       max_parallel_maintenance_workers: "2"
   # Initial bootstrap for first install
   bootstrap:
-   initdb:
-      database: openwebuidbapp
-      owner: openwebuiusr
+    initdb:
+      database: nextclouddb
+      owner: nextcloudusr
       secret:
-        name: open-webui-db-secret
+        name: nextcloud-db-secret
+      encoding: 'UTF8'
   primaryUpdateStrategy: unsupervised
   monitoring:
     enablePodMonitor: true
@@ -45,7 +46,7 @@ spec:
   # Note: previousCluster needs to be set to the name of the previous cluster when recovering from an existing cnpg cluster.
   # bootstrap:
   #   recovery:
-  #     source: &previousCluster paperless-postgres17-v1
+  #     source: &previousCluster nextcloud-postgres17-v1
   backup:
     retentionPolicy: 3d
     barmanObjectStore: &barmanObjectStore
@@ -54,19 +55,19 @@ spec:
       wal:
         compression: zstd
         maxParallel: 2
-      destinationPath: s3://k8s-postgres/open-webui/
+      destinationPath: s3://k8s-postgres/nextcloud/
       endpointURL: ${SECRET_S3_URL}
-      serverName: open-webui-postgres17-v1
+      serverName: nextcloud-postgres17-v1
       s3Credentials:
         accessKeyId:
-          name: open-webui-db-secret
+          name: nextcloud-db-secret
           key: ACCESS_KEY_ID
         secretAccessKey:
-          name: open-webui-db-secret
+          name: nextcloud-db-secret
           key: SECRET_ACCESS_KEY
  # Note: externalClusters is needed when recovering from an existing cnpg cluster
  # externalClusters:
- #   - name: *previousCluster
- #     barmanObjectStore:
- #       <<: *barmanObjectStore
- #       serverName: *previousCluster
+ #  - name: *previousCluster
+ #    barmanObjectStore:
+ #      <<: *barmanObjectStore
+ #      serverName: *previousCluster
