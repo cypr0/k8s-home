@@ -34,6 +34,10 @@ spec:
         repository: nginxinc/nginx-unprivileged
         tag: 1.29-alpine-perl
         pullPolicy: IfNotPresent
+      SecurityContext:
+        runAsUser: 3000
+        runAsGroup: 3000
+        runAsNonRoot: true
     nextcloud:
       datadir: /var/www/data
       extraEnv:
@@ -55,7 +59,7 @@ spec:
           authtype: NONE
           name: ""
           password: ""
-      podSecurityContext:
+      SecurityContext:
         runAsUser: 3000
         runAsGroup: 3000
         runAsNonRoot: true
