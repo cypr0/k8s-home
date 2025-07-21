@@ -89,6 +89,10 @@ spec:
               value: "true"
             - name: FRESHCLAM_CHECKS
               value: "4"
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            fsGroup: 0
     internalDatabase:
       enabled: false
     externalDatabase:
