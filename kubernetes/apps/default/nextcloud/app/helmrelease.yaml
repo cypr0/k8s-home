@@ -97,6 +97,26 @@ spec:
             runAsUser: 0
             runAsGroup: 0
             fsGroup: 0
+        - name: languagetool
+          image: collabora/languagetool:6.4@sha256:09a095cb078026e832bfa3d8fafaf18656dee00b6fd86e1f2c6a323a107fa697
+        - name: whiteboard
+          image: ghcr.io/nextcloud-releases/whiteboard:v1.1.2
+          env:
+            - name: NEXTCLOUD_URL
+              value: "cloud.${SECRET_DOMAIN}"
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secret
+                  key: WHITEBOARD_JWT_SECRET_KEY
+            - name: STORAGE_STRATEGY
+              value: "redis"
+            - name: REDIS_URL
+              value: "redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379/9"
+          securityContext:
+            runAsUser: 65534
+            runAsGroup: 65534
+            fsGroup: 65534
     internalDatabase:
       enabled: false
     externalDatabase:
