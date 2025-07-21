@@ -89,6 +89,19 @@ spec:
         secretName: nextcloud-secret
         usernameKey: POSTGRES_USER
         passwordKey: POSTGRES_PASSWORD
+    collabora:
+      enabled: true
+      collabora:
+        aliasgroups:
+          - host: "https://cloud.${SECRET_DOMAIN}"
+      extra_params: --o:ssl.enable=false --o:ssl.termination=true
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-secret
+        usernameKey: COLLABORA_USERNAME
+        passwordKey: COLLABORA_PASSWORD
+    cronjob:
+      enabled: true
     persistence:
       enabled: true
       existingClaim: nextcloud-pvc
