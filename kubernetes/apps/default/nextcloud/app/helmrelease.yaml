@@ -30,8 +30,10 @@ spec:
       flavor: fpm-alpine
     nginx:
       enabled: true
-      image: nginxinc/nginx-unprivileged
-      tag: 1.29-alpine-perl
+      image:
+        repository: nginxinc/nginx-unprivileged
+        tag: 1.29-alpine-perl
+        pullPolicy: IfNotPresent
     nextcloud:
       datadir: /var/www/data
       extraEnv:
