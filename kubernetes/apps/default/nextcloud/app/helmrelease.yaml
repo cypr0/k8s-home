@@ -77,6 +77,14 @@ spec:
             'default_phone_region' => 'DE',
             'maintenance_window_start' => 2,
           ); ?>
+        extraSidecarContainers:
+          - name: nextcloud-clamav
+            image: clamav/clamav:1.4.3@sha256:35b689111f3cfefe6ab00a5fe58dc45a078b267508c0c584a2616775cb160c4b
+            env:
+              CLAMAV_NO_CLAMD: false
+              CLAMAV_NO_FRESHCLAMD: false
+              CLAMAV_NO_MILTERD: true
+              FRESHCLAM_CHECKS: 4
     internalDatabase:
       enabled: false
     externalDatabase:
