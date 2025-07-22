@@ -95,12 +95,20 @@ spec:
               value: "true"
             - name: FRESHCLAM_CHECKS
               value: "4"
+          ports:
+            - name: http
+              containerPort: 3310
+              protocol: TCP
           securityContext:
             runAsUser: 0
             runAsGroup: 0
             fsGroup: 0
         - name: languagetool
           image: collabora/languagetool:6.4@sha256:09a095cb078026e832bfa3d8fafaf18656dee00b6fd86e1f2c6a323a107fa697
+          ports:
+            - name: http
+              containerPort: 8010
+              protocol: TCP
         - name: whiteboard
           image: ghcr.io/nextcloud-releases/whiteboard:v1.1.2
           env:
