@@ -109,28 +109,28 @@ spec:
             - name: http
               containerPort: 8010
               protocol: TCP
-        - name: whiteboard
-          image: ghcr.io/nextcloud-releases/whiteboard:v1.1.2
-          env:
-            - name: NEXTCLOUD_URL
-              value: "cloud.${SECRET_DOMAIN}"
-            - name: JWT_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: nextcloud-secret
-                  key: WHITEBOARD_JWT_SECRET_KEY
-            - name: STORAGE_STRATEGY
-              value: "redis"
-            - name: REDIS_URL
-              value: "redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379/9"
-          ports:
-            - name: http
-              containerPort: 3002
-              protocol: TCP
-          securityContext:
-            runAsUser: 65534
-            runAsGroup: 65534
-            fsGroup: 65534
+      #  - name: whiteboard
+      #    image: ghcr.io/nextcloud-releases/whiteboard:v1.1.2
+      #    env:
+      #      - name: NEXTCLOUD_URL
+      #        value: "cloud.${SECRET_DOMAIN}"
+      #      - name: JWT_SECRET_KEY
+      #        valueFrom:
+      #          secretKeyRef:
+      #            name: nextcloud-secret
+      #            key: WHITEBOARD_JWT_SECRET_KEY
+      #      - name: STORAGE_STRATEGY
+      #        value: "redis"
+      #      - name: REDIS_URL
+      #        value: "redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379/9"
+      #    ports:
+      #      - name: http
+      #        containerPort: 3002
+      #        protocol: TCP
+      #    securityContext:
+      #      runAsUser: 65534
+      #      runAsGroup: 65534
+      #      fsGroup: 65534
     internalDatabase:
       enabled: false
     externalDatabase:
