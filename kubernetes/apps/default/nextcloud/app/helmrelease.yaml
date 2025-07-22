@@ -34,11 +34,6 @@ spec:
         repository: nginxinc/nginx-unprivileged
         tag: 1.29-alpine-perl
         pullPolicy: IfNotPresent
-      securityContext:
-        runAsUser: 3000
-        runAsGroup: 3000
-        fsGroup: 3000
-        runAsNonRoot: false
     nextcloud:
       datadir: /var/www/data
       extraEnv:
@@ -131,6 +126,17 @@ spec:
       #      runAsUser: 65534
       #      runAsGroup: 65534
       #      fsGroup: 65534
+      extraInitContainers:
+        - name: init-chmod-pvc
+          image: docker.io/library/alpine:3.22.0@sha256:8a1f59ffb675680d47db6337b49d22281a139e9d709335b492be023728e11715
+          command: ["/bin/sh"]
+          args: ["-c", "mkdir -p /var/www/html/config && chmod 0770 /var/www/html/config && chown 3000:3000 /var/www/html/config && mkdir -p /usr/local/etc/php/conf.d && chmod 0770 /usr/local/etc/php/conf.d && chown 3000:3000 /usr/local/etc/php/conf.d"]
+          volumeMounts:
+            - name: nextcloud-pvc
+              mountPath: /var/www/html
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
     internalDatabase:
       enabled: false
     externalDatabase:
