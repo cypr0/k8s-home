@@ -132,7 +132,7 @@ spec:
           command: ["/bin/sh"]
           args: ["-c", "mkdir -p /var/www/html/config && chmod 0770 /var/www/html/config && chown 3000:3000 /var/www/html/config && mkdir -p /usr/local/etc/php/conf.d && chmod 0770 /usr/local/etc/php/conf.d && chown 3000:3000 /usr/local/etc/php/conf.d"]
           volumeMounts:
-            - name: nextcloud-nextcloud
+            - name: nextcloud-main
               mountPath: /var/www/html
           securityContext:
             runAsUser: 0
