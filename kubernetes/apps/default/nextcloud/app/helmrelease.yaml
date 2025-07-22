@@ -123,6 +123,10 @@ spec:
               value: "redis"
             - name: REDIS_URL
               value: "redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379/9"
+          ports:
+            - name: http
+              containerPort: 3002
+              protocol: TCP
           securityContext:
             runAsUser: 65534
             runAsGroup: 65534
