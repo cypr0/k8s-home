@@ -38,7 +38,7 @@ spec:
         runAsUser: 3000
         runAsGroup: 3000
         fsGroup: 3000
-        runAsNonRoot: true
+        runAsNonRoot: false
     nextcloud:
       datadir: /var/www/data
       extraEnv:
@@ -64,7 +64,7 @@ spec:
         runAsUser: 3000
         runAsGroup: 3000
         fsGroup: 3000
-        runAsNonRoot: true
+        runAsNonRoot: false
       configs:
         proxy.config.php: |-
           <?php
