@@ -131,11 +131,11 @@ spec:
                     name: nextcloud-secret
                     key: COLLABORA_PASSWORD
               - name: extra_params
-                value: "--o:ssl.termination=true --o:ssl.enable=false --o:welcome.enable=false --o:languagetool.enabled=true --o:languagetool.base_url=http://nextcloud-languagetool.default.svc.cluster.local:8010/v2 --o:net.proxy_allowed_hosts=192.168.0.0/16,10.0.0.0/8,cloud.${SECRET_DOMAIN},office.${SECRET_DOMAIN} --o:admin_console.enable=false"
+                value: "--o:ssl.termination=true --o:ssl.enable=false --o:welcome.enable=false --o:languagetool.enabled=true --o:languagetool.base_url=http://nextcloud-languagetool.default.svc.cluster.local:8010/v2 --o:net.proxy_allowed_hosts=192.168.0.0/16,10.0.0.0/8,cloud.${SECRET_DOMAIN} --o:admin_console.enable=false"
               - name: dictionaries
                 value: "de_DE en_GB en_US es_ES fr_FR"
               - name: server_name
-                value: "office.${SECRET_DOMAIN}"
+                value: "nextcloud-collabora.default.svc.cluster.local"
             securityContext:
               runAsUser: 1001
               runAsGroup: 1001
@@ -240,7 +240,7 @@ spec:
                     0 => 'localhost',
                     1 => 'cloud.${SECRET_DOMAIN}',
                     2 => 'id.${SECRET_DOMAIN}',
-                    3 => 'office.${SECRET_DOMAIN}'
+                    3 => 'nextcloud-collabora.default.svc.cluster.local',
                 ),
                 'trusted_proxies' => array(
                     0 => '127.0.0.1',

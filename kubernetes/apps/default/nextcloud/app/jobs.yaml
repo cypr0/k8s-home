@@ -202,7 +202,7 @@ spec:
               sleep 10;
             done;
             echo "Nextcloud Office is installed. Configuring...";
-            php /var/www/html/occ config:app:set --value https://office.${SECRET_DOMAIN} richdocuments wopi_url
+            php /var/www/html/occ config:app:set --value http://nextcloud-collabora.default.svc.cluster.local:9980 richdocuments wopi_url
             php /var/www/html/occ richdocuments:activate-config
             echo "Nextcloud Office configuration completed.";
         volumeMounts:
