@@ -159,7 +159,7 @@ spec:
               - name: STORAGE_STRATEGY
                 value: "redis"
               - name: REDIS_URL
-                value: "redis://:${REDIS_HOST_PASSWORD}@dragonfly.database.svc.cluster.local:6379/9"
+                value: "redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379/9"
             securityContext:
               runAsUser: 65534
               runAsGroup: 65534
