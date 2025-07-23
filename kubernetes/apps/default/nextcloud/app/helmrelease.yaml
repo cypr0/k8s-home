@@ -150,7 +150,7 @@ spec:
               tag: v1.1.2@sha256:191e68a081202a70f8d26660409574103bd640fa9cea3d643c0458fb442449db
             env:
               - name: NEXTCLOUD_URL
-                value: "cloud.${SECRET_DOMAIN}"
+                value: "https://cloud.${SECRET_DOMAIN}"
               - name: JWT_SECRET_KEY
                 valueFrom:
                   secretKeyRef:
