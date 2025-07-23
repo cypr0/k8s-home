@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nextcloud-pv
+  name: nextcloud-data-pv
 spec:
   capacity:
     storage: 200Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: nextcloud-storage
+  storageClassName: nextcloud-data-storage
   mountOptions:
     - hard
     - rw
@@ -22,10 +22,21 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nextcloud-pvc
+  name: nextcloud-data-pvc
 spec:
   accessModes: ["ReadWriteMany"]
-  storageClassName: nextcloud-storage
+  storageClassName: nextcloud-data-storage
   resources:
     requests:
       storage: 200Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloud-app-pvc
+spec:
+  accessModes: ["ReadWriteMany"]
+  storageClassName: longhorn-postgres
+  resources:
+    requests:
+      storage: 20Gi

@@ -26,10 +26,10 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: nextcloud-pvc
+          claimName: nextcloud-data-pvc
       - name: app-config
         persistentVolumeClaim:
-          claimName: nextcloud-pvc
+          claimName: nextcloud-app-pvc
 ---
 apiVersion: batch/v1
 kind: Job
@@ -59,10 +59,10 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: nextcloud-pvc
+          claimName: nextcloud-data-pvc
       - name: app-config
         persistentVolumeClaim:
-          claimName: nextcloud-pvc
+          claimName: nextcloud-app-pvc
 ---
 apiVersion: batch/v1
 kind: Job
@@ -120,10 +120,10 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: nextcloud-pvc
+          claimName: nextcloud-data-pvc
       - name: app-config
         persistentVolumeClaim:
-          claimName: nextcloud-pvc
+          claimName: nextcloud-app-pvc
 ---
 apiVersion: batch/v1
 kind: Job
@@ -168,10 +168,10 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: nextcloud-pvc
+          claimName: nextcloud-data-pvc
       - name: app-config
         persistentVolumeClaim:
-          claimName: nextcloud-pvc
+          claimName: nextcloud-app-pvc
 ---
 apiVersion: batch/v1
 kind: Job
@@ -216,10 +216,10 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: nextcloud-pvc
+          claimName: nextcloud-data-pvc
       - name: app-config
         persistentVolumeClaim:
-          claimName: nextcloud-pvc
+          claimName: nextcloud-app-pvc
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -245,6 +245,10 @@ spec:
                 - sh
                 - -c
                 - |
+                  until php /var/www/html/occ status --output json | grep -q '"installed":true'; do
+                    echo "Waiting for Nextcloud installation...";
+                    sleep 10;
+                  done;
                   if [ -f /var/www/html/cron.php ]; then
                     php -f /var/www/html/cron.php;
                   else
@@ -261,10 +265,10 @@ spec:
           volumes:
             - name: app-config
               persistentVolumeClaim:
-                claimName: nextcloud-pvc
+                claimName: nextcloud-app-pvc
             - name: data
               persistentVolumeClaim:
-                claimName: nextcloud-pvc
+                claimName: nextcloud-data-pvc
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -286,7 +290,15 @@ spec:
           - name: nextcloud-cronjob-missingindices
             image: docker.io/library/nextcloud:31.0.7-fpm-alpine
             command: ["/bin/sh", "-c"]
-            args: ["sleep 10; until php /var/www/html/occ status --output json | grep -q '\"installed\":true'; do sleep 10; done && php /var/www/html/occ maintenance:mode --on && php /var/www/html/occ db:add-missing-indices && php /var/www/html/occ maintenance:mode --off"]
+            args:
+              - |
+                until php /var/www/html/occ status --output json | grep -q '"installed":true'; do
+                  echo "Waiting for Nextcloud installation...";
+                  sleep 10;
+                done;
+                php /var/www/html/occ maintenance:mode --on
+                php /var/www/html/occ db:add-missing-indices
+                php /var/www/html/occ maintenance:mode --off
             volumeMounts:
             - name: app-config
               mountPath: /var/www/html
@@ -298,10 +310,10 @@ spec:
           volumes:
           - name: app-config
             persistentVolumeClaim:
-              claimName: nextcloud-pvc
+              claimName: nextcloud-app-pvc
           - name: data
             persistentVolumeClaim:
-              claimName: nextcloud-pvc
+              claimName: nextcloud-data-pvc
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -324,7 +336,12 @@ spec:
             image: docker.io/library/nextcloud:31.0.7-fpm-alpine
             command: ["/bin/sh", "-c"]
             args:
-              - php /var/www/html/occ background-job:worker -v -t 60 "OC\TaskProcessing\SynchronousBackgroundJob"
+              - |
+                until php /var/www/html/occ status --output json | grep -q '"installed":true'; do
+                  echo "Waiting for Nextcloud installation...";
+                  sleep 10;
+                done;
+                php /var/www/html/occ background-job:worker -v -t 60 "OC\TaskProcessing\SynchronousBackgroundJob"
             volumeMounts:
             - name: app-config
               mountPath: /var/www/html
@@ -336,7 +353,7 @@ spec:
           volumes:
           - name: app-config
             persistentVolumeClaim:
-              claimName: nextcloud-pvc
+              claimName: nextcloud-app-pvc
           - name: data
             persistentVolumeClaim:
-              claimName: nextcloud-pvc
+              claimName: nextcloud-data-pvc
