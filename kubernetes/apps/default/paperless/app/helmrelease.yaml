@@ -55,9 +55,11 @@ spec:
                             }
                           }
                         ],
-                        "OAUTH_PKCE_ENABLED": "True"
+                        "OAUTH_PKCE_ENABLED": "True",
+                        "SCOPE": ["openid", "profile", "email"]
                       }
                     }
+              PAPERLESS_SOCIAL_ACCOUNT_SYNC_GROUPS: true
               PAPERLESS_TASK_WORKERS: 2
               PAPERLESS_TIKA_ENABLED: 1
               PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg.default.svc.cluster.local:3030
