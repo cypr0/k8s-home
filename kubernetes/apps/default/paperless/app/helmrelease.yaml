@@ -35,6 +35,7 @@ spec:
               PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
               PAPERLESS_CONSUMPTION_DIR: /consume
               PAPERLESS_DATA_DIR: /library/data
+              PAPERLESS_DISABLE_REGULAR_LOGIN: "true"
               PAPERLESS_EXPORT_DIR: /library/export
               PAPERLESS_LOGOUT_REDIRECT_URL: https://id.${SECRET_DOMAIN}/application/o/paperless-ngx/end-session/
               PAPERLESS_MEDIA_ROOT: /library/media
@@ -59,7 +60,7 @@ spec:
                         "SCOPE": ["openid", "profile", "email", "groups"]
                       }
                     }
-              PAPERLESS_SOCIAL_ACCOUNT_SYNC_GROUPS: true
+              PAPERLESS_SOCIAL_ACCOUNT_SYNC_GROUPS: "true"
               PAPERLESS_TASK_WORKERS: 2
               PAPERLESS_TIKA_ENABLED: 1
               PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg.default.svc.cluster.local:3030
