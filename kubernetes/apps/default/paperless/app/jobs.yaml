@@ -28,7 +28,7 @@ spec:
                   echo "🔍 Starting Paperless bulk permissions fix..."
                   PAPERLESS_URL="http://paperless-paperless-ngx.default.svc.cluster.local"
                   OWNER_ID="4"  # User ID for assignment
-                  GROUP_ID="2"  # Group ID for assignment
+                  GROUP_ID="1"  # Group ID for assignment
                   AUTH_HEADER="Authorization: Token $PAPERLESS_API_TOKEN"
 
                   # Function to update permissions using PATCH requests instead of bulk API
