@@ -23,6 +23,7 @@ spec:
         strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
+          secret.reloader.stakater.com/reload: "paperless-secret"
         containers:
           paperless-ngx:
             image:
@@ -195,7 +196,7 @@ spec:
               USE_EXISTING_DATA: "yes"
               ACTIVATE_CUSTOM_FIELDS: "no"
               CUSTOM_API_URL: "https://openrouter.ai/api/v1"
-              CUSTOM_MODEL: "google/gemini-2.5-flash"
+              CUSTOM_MODEL: "anthropic/claude-3-haiku"
             envFrom:
               - secretRef:
                   name: paperless-secret
