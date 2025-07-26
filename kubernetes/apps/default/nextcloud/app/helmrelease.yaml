@@ -143,7 +143,7 @@ spec:
           languagetool:
             image:
               repository: collabora/languagetool
-              tag: 6.4@sha256:09a095cb078026e832bfa3d8fafaf18656dee00b6fd86e1f2c6a323a107fa697
+              tag: 6.6@sha256:a93a2470a49c28e36b0e3b73f4562dab21a532ad10819ddc50bf69f80e98240d
           whiteboard:
             image:
               repository: ghcr.io/nextcloud-releases/whiteboard
