@@ -103,6 +103,7 @@ spec:
             --mapping-display-name="name" \
             --mapping-email="email" \
             --mapping-quota="quota" \
+            --mapping-avatar="avatar" \
             --group-provisioning="1" \
             --mapping-groups="groups";
           echo "Successfully configured user_oidc provider.";
