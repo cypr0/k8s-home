@@ -35,7 +35,7 @@ spec:
   #   recovery:
   #     source: &previousCluster authentik-postgres17-v1
   backup:
-    retentionPolicy: 3d
+    retentionPolicy: 8d
     barmanObjectStore:
       data:
         compression: gzip

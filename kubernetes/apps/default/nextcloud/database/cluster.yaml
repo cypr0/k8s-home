@@ -48,7 +48,7 @@ spec:
   #   recovery:
   #     source: &previousCluster nextcloud-postgres17-v1
   backup:
-    retentionPolicy: 3d
+    retentionPolicy: 8d
     barmanObjectStore: &barmanObjectStore
       data:
         compression: gzip
