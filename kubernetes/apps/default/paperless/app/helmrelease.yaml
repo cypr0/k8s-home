@@ -36,7 +36,7 @@ spec:
               PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
               PAPERLESS_CONSUMPTION_DIR: /consume
               PAPERLESS_DATA_DIR: /library/data
-              PAPERLESS_DISABLE_REGULAR_LOGIN: "true"
+              PAPERLESS_DISABLE_REGULAR_LOGIN: "false"
               PAPERLESS_EXPORT_DIR: /library/export
               PAPERLESS_LOGOUT_REDIRECT_URL: https://id.${SECRET_DOMAIN}/application/o/paperless-ngx/end-session/
               PAPERLESS_MEDIA_ROOT: /library/media
