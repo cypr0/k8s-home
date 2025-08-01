@@ -7,4 +7,3 @@ resources:
   - ./cloudnative-pg.yaml
   - ./external-dns.yaml
   - ./longhorn.yaml
-  - ./nextcloud.yaml
