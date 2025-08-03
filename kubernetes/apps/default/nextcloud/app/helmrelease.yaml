@@ -212,6 +212,17 @@ spec:
           - backendRefs:
               - name: nextcloud-nginx
                 port: 8080
+      collabora:
+        hostnames:
+          - office.${SECRET_DOMAIN}
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: nextcloud-collabora
+                port: 9980
     configMaps:
       nextcloud-config:
         enabled: true
