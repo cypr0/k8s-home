@@ -35,7 +35,7 @@ spec:
           immich-server:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.136.0
+              tag: v1.138.0
             resources:
               requests:
                 cpu: 100m
