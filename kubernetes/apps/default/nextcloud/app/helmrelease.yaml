@@ -147,7 +147,7 @@ spec:
           whiteboard:
             image:
               repository: ghcr.io/nextcloud-releases/whiteboard
-              tag: v1.1.2@sha256:191e68a081202a70f8d26660409574103bd640fa9cea3d643c0458fb442449db
+              tag: v1.1.3@sha256:dbcc43058af7ec715a4936a1b2942262c32e299d9ce18904cd7a96a5141996e4
             env:
               - name: NEXTCLOUD_URL
                 value: "https://cloud.${SECRET_DOMAIN}"
