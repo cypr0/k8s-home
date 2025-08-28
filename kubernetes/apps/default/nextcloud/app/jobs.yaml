@@ -323,9 +323,13 @@ metadata:
   namespace: nextcloud
 spec:
   schedule: "*/1 * * * *"  # Every minute
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: 60
+      backoffLimit: 1
       template:
         spec:
           securityContext:
