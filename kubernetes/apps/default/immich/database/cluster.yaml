@@ -37,7 +37,7 @@ spec:
   #   recovery:
   #     source: &previousCluster immich-postgres17-v1
   backup:
-    retentionPolicy: 8d
+    retentionPolicy: 14d
     barmanObjectStore: &barmanObjectStore
       data:
         compression: gzip

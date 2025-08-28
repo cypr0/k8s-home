@@ -31,6 +31,9 @@ spec:
       max_parallel_workers_per_gather: "2"
       max_parallel_workers: "4"
       max_parallel_maintenance_workers: "2"
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
   # Initial bootstrap for first install
   bootstrap:
    initdb:
@@ -47,7 +50,7 @@ spec:
   #   recovery:
   #     source: &previousCluster paperless-postgres17-v1
   backup:
-    retentionPolicy: 8d
+    retentionPolicy: 14d
     barmanObjectStore: &barmanObjectStore
       data:
         compression: gzip
