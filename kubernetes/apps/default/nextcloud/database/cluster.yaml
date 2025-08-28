@@ -16,6 +16,9 @@ spec:
     parameters:
       max_connections: "200"
       shared_buffers: 256MB
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
   # Initial bootstrap for first install
   # bootstrap:
   #   initdb:
