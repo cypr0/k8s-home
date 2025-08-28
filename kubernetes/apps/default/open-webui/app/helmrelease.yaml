@@ -61,6 +61,8 @@ spec:
               PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH: 1536
               CONTENT_EXTRACTION_ENGINE: tika
               TIKA_SERVER_URL: http://paperless-tika.default.svc.cluster.local:9998
+              ENABLE_API_KEY: true
+              JWT_EXPIRES_IN: 8h
             envFrom:
               - secretRef:
                   name: open-webui-secret
