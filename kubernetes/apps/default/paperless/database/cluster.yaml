@@ -33,7 +33,7 @@ spec:
   # Note: previousCluster needs to be set to the name of the previous cluster when recovering from an existing cnpg cluster.
   bootstrap:
     recovery:
-      source: &previousCluster paperless-postgres17-v1
+      source: &previousCluster paperless-postgres17-v2
   backup:
     retentionPolicy: 14d
     barmanObjectStore: &barmanObjectStore
@@ -44,7 +44,7 @@ spec:
         maxParallel: 2
       destinationPath: s3://k8s-postgres/paperless/
       endpointURL: ${SECRET_S3_URL}
-      serverName: paperless-postgres17-v2
+      serverName: paperless-postgres17-v3
       s3Credentials:
         accessKeyId:
           name: paperless-db-secret

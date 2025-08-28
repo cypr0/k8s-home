@@ -20,21 +20,21 @@ spec:
     inProgress: false
     reusePVC: true
   # Initial bootstrap for first install
-  # bootstrap:
-  #   initdb:
-  #     database: nextclouddb
-  #     owner: nextcloudusr
-  #     secret:
-  #       name: nextcloud-db-secret
-  #     encoding: 'UTF8'
+  bootstrap:
+    initdb:
+      database: nextclouddb
+      owner: nextcloudusr
+      secret:
+        name: nextcloud-db-secret
+      encoding: 'UTF8'
   primaryUpdateStrategy: unsupervised
   monitoring:
     enablePodMonitor: true
   # Bootstrap to recover from an existing backup
   # Note: previousCluster needs to be set to the name of the previous cluster when recovering from an existing cnpg cluster.
-  bootstrap:
-    recovery:
-      source: &previousCluster nextcloud-postgres17-v1
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster nextcloud-postgres17-v1
   backup:
     retentionPolicy: 14d
     barmanObjectStore: &barmanObjectStore
@@ -45,7 +45,7 @@ spec:
         maxParallel: 2
       destinationPath: s3://k8s-postgres/nextcloud/
       endpointURL: ${SECRET_S3_URL}
-      serverName: nextcloud-postgres17-v3
+      serverName: nextcloud-postgres17-v1
       s3Credentials:
         accessKeyId:
           name: nextcloud-db-secret
