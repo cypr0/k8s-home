@@ -34,7 +34,7 @@ spec:
   # Note: previousCluster needs to be set to the name of the previous cluster when recovering from an existing cnpg cluster.
   bootstrap:
     recovery:
-      source: &previousCluster nextcloud-postgres17-v1
+      source: &previousCluster nextcloud-postgres17-v2
   backup:
     retentionPolicy: 8d
     barmanObjectStore: &barmanObjectStore
@@ -45,7 +45,7 @@ spec:
         maxParallel: 2
       destinationPath: s3://k8s-postgres/nextcloud/
       endpointURL: ${SECRET_S3_URL}
-      serverName: nextcloud-postgres17-v2
+      serverName: nextcloud-postgres17-v3
       s3Credentials:
         accessKeyId:
           name: nextcloud-db-secret
