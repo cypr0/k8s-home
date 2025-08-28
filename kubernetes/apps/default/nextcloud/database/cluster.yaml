@@ -34,7 +34,7 @@ spec:
   # Note: previousCluster needs to be set to the name of the previous cluster when recovering from an existing cnpg cluster.
   bootstrap:
     recovery:
-      source: &previousCluster nextcloud-postgres17-v2
+      source: &previousCluster nextcloud-postgres17-v1
   backup:
     retentionPolicy: 8d
     barmanObjectStore: &barmanObjectStore
