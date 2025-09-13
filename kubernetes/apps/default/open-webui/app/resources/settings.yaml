@@ -44,6 +44,9 @@ server:
     X-Download-Options : noopen
     X-Robots-Tag : noindex, nofollow
     Referrer-Policy : no-referrer
+  proxy_headers:
+    x_forwarded_for: true
+    x_real_ip: true
 
 redis:
   url: redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379
