@@ -36,10 +36,6 @@ spec:
               SOCIAL_AUTH_OIDC_SCOPE: openid profile email roles
               LOGOUT_REDIRECT_URL: https://id.{SECRET_DOMAIN}/application/o/netbox/end-session/
               CORS_ORIGIN_ALLOW_ALL: true
-              DB_HOST: cnpg-netbox-rw.default.svc.cluster.local
-              DB_PORT: "5432"
-              DB_NAME: netboxdb
-              DB_USER: netboxusr
               EMAIL_FROM: "Netbox <mail@{SECRET_DOMAIN}>"
               EMAIL_PORT: 25
               EMAIL_SERVER: ${SECRET_MAIL_SERVER}
