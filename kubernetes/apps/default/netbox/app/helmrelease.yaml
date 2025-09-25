@@ -47,9 +47,9 @@ spec:
               GRAPHQL_ENABLED: true
               MEDIA_ROOT: /opt/netbox/netbox/media
               METRICS_ENABLED: false
-              REDIS_CACHE-DATABASE: 22
+              REDIS_CACHE_DATABASE: 22
               REDIS_CACHE_HOST: dragonfly.database.svc.cluster.local
-              REDIS_CACHE_PORTT: "6379"
+              REDIS_CACHE_PORT: "6379"
               REDIS_CACHE_PASSWORD: ${DRAGONFLY_PASSWORD}
               REDIS_DATABASE: 21
               REDIS_HOST: dragonfly.database.svc.cluster.local
