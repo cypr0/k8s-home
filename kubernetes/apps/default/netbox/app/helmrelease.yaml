@@ -112,7 +112,7 @@ spec:
         type: configMap
         name: netbox-config
         globalMounts:
-          - path: /etc/netbox/config/configuration.py
+          - path: /opt/netbox/netbox/netbox/configuration.py
             subPath: configuration.py
             readOnly: true
       pipeline:
