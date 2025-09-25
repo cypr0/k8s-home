@@ -28,6 +28,9 @@ spec:
               tag: v4.4@sha256:f8687d9ccca82224c6967c5c2383692dab7a76a4b75d98043de982dc09acb72e
             env:
               TIME_ZONE: ${TIMEZONE}
+              CORS_ORIGIN_ALLOW_ALL: "True"
+              DB_WAIT_DEBUG: "1"
+              HOUSEKEEPING_INTERVAL: "86400"
               REMOTE_AUTH_ENABLED: true
               REMOTE_AUTH_BACKEND: social_core.backends.open_id_connect.OpenIdConnectAuth
               SOCIAL_AUTH_OIDC_OIDC_ENDPOINT: https://id.{SECRET_DOMAIN}/application/o/netbox/
@@ -35,7 +38,6 @@ spec:
               SOCIAL_AUTH_OIDC_SECRET: ${NETBOX_OPENID_CLIENT_SECRET}
               SOCIAL_AUTH_OIDC_SCOPE: openid profile email roles
               LOGOUT_REDIRECT_URL: https://id.{SECRET_DOMAIN}/application/o/netbox/end-session/
-              CORS_ORIGIN_ALLOW_ALL: true
               EMAIL_FROM: "Netbox <mail@{SECRET_DOMAIN}>"
               EMAIL_PORT: 25
               EMAIL_SERVER: ${SECRET_MAIL_SERVER}
