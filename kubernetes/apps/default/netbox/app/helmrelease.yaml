@@ -24,8 +24,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/netbox-community/netbox
-              tag: v4.4.1@sha256:f8687d9ccca82224c6967c5c2383692dab7a76a4b75d98043de982dc09acb72e
+              repository: netboxcommunity/netbox
+              tag: v4.4@sha256:f8687d9ccca82224c6967c5c2383692dab7a76a4b75d98043de982dc09acb72e
             env:
               TIME_ZONE: ${TIMEZONE}
               REMOTE_AUTH_ENABLED: true
