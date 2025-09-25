@@ -90,6 +90,13 @@ spec:
                 memory: 512Mi
               limits:
                 memory: 2Gi
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: netbox
@@ -108,29 +115,7 @@ spec:
               - name: netbox
                 port: *port
     persistence:
-      config:
-        type: configMap
-        name: netbox-config
-        globalMounts:
-          - path: /opt/netbox/netbox/netbox/configuration.py
-            subPath: configuration.py
-            readOnly: true
-      pipeline:
-        type: configMap
-        name: netbox-pipeline
-        globalMounts:
-          - path: /opt/netbox/netbox/netbox/custom_pipeline.py
-            subPath: custom_pipeline.py
-            readOnly: true
       data:
         existingClaim: netbox-pvc
         globalMounts:
           - path: /opt/netbox/netbox/media
-      reports:
-        type: emptyDir
-        globalMounts:
-          - path: /opt/netbox/netbox/reports
-      scripts:
-        type: emptyDir
-        globalMounts:
-          - path: /opt/netbox/netbox/scripts
