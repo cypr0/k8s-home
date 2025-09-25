@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: immich
+  name: netbox
 spec:
   interval: 1h
   chartRef:
@@ -60,7 +60,7 @@ spec:
               SKIP_SUPERUSER: false
             envFrom:
               - secretRef:
-                  name: *app
+                  name: netbox-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -99,7 +99,7 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: *app
+        controller: netbox
         ports:
           http:
             port: *port
@@ -112,7 +112,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: netbox
                 port: *port
     persistence:
       config:
