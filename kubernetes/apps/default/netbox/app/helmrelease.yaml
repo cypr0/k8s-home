@@ -51,6 +51,8 @@ spec:
               REDIS_HOST: dragonfly.database.svc.cluster.local
               REDIS_PORT: "6379"
               REDIS_PASSWORD: ${DRAGONFLY_PASSWORD}
+              REDIS_URL: "redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379/21"
+              REDIS_CACHE_URL: "redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379/22"
               RELEASE_CHECK_URL: https://api.github.com/repos/netbox-community/netbox/releases
               WEBHOOKS_ENABLED: true
               SKIP_SUPERUSER: false
