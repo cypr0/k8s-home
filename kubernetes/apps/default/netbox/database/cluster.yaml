@@ -1,0 +1,61 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cnpg-netbox
+spec:
+  description: Postgresql cluster for Netbox
+  # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql repository=ghcr.io
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.6-standard-trixie
+  instances: 1
+  storage:
+    size: 5Gi
+    storageClass: longhorn-postgres
+  postgresql:
+    parameters:
+      max_connections: "200"
+      shared_buffers: 256MB
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
+  primaryUpdateStrategy: unsupervised
+  monitoring:
+    enablePodMonitor: true
+  # Initial bootstrap for first install
+  bootstrap:
+    initdb:
+      database: netboxdb
+      owner: netboxusr
+      secret:
+        name: netbox-db-secret
+      encoding: 'UTF8'
+  # Bootstrap to recover from an existing backup
+  # Note: previousCluster needs to be set to the name of the previous cluster when recovering from an existing cnpg cluster.
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster netbox-postgres17-v1
+  backup:
+    retentionPolicy: 8d
+    barmanObjectStore: &barmanObjectStore
+      data:
+        compression: gzip
+      wal:
+        compression: zstd
+        maxParallel: 2
+      destinationPath: s3://k8s-postgres/netbox/
+      endpointURL: ${SECRET_S3_URL}
+      serverName: netbox-postgres17-v1
+      s3Credentials:
+        accessKeyId:
+          name: netbox-db-secret
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: netbox-db-secret
+          key: SECRET_ACCESS_KEY
+ # Note: externalClusters is needed when recovering from an existing cnpg cluster
+ # externalClusters:
+ #  - name: *previousCluster
+ #    barmanObjectStore:
+ #      <<: *barmanObjectStore
+ #      serverName: *previousCluster

@@ -1,0 +1,143 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      netbox:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: hcr.io/netbox-community/netbox
+              tag: v4.4.1@sha256:f8687d9ccca82224c6967c5c2383692dab7a76a4b75d98043de982dc09acb72e
+            env:
+              TIME_ZONE: Europe/Berlin
+              REMOTE_AUTH_ENABLED: true
+              REMOTE_AUTH_BACKEND: social_core.backends.open_id_connect.OpenIdConnectAuth
+              SOCIAL_AUTH_OIDC_OIDC_ENDPOINT: https://id.{SECRET_DOMAIN}/application/o/netbox/
+              SOCIAL_AUTH_OIDC_KEY: ${NETBOX_OPENID_CLIENT_ID}
+              SOCIAL_AUTH_OIDC_SECRET: ${NETBOX_OPENID_CLIENT_SECRET}
+              SOCIAL_AUTH_OIDC_SCOPE: openid profile email roles
+              LOGOUT_REDIRECT_URL: https://id.{SECRET_DOMAIN}/application/o/netbox/end-session/
+              CORS_ORIGIN_ALLOW_ALL: true
+              DB_HOST: cnpg-netbox-rw.default.svc.cluster.local
+              DB_PORT: "5432"
+              DB_NAME: netboxdb
+              DB_USER: netboxusr
+              EMAIL_FROM: "Netbox <mail@{SECRET_DOMAIN}>"
+              EMAIL_PORT: 25
+              EMAIL_SERVER: ${SECRET_MAIL_SERVER}
+              EMAIL_TIMEOUT: 30
+              GRAPHQL_ENABLED: true
+              MEDIA_ROOT: /opt/netbox/netbox/media
+              METRICS_ENABLED: false
+              REDIS_CACHE-DATABASE: 22
+              REDIS_CACHE_HOST: dragonfly.database.svc.cluster.local
+              REDIS_CACHE_PORTT: "6379"
+              REDIS_CACHE_PASSWORD: ${DRAGONFLY_PASSWORD}
+              REDIS_DATABASE: 21
+              REDIS_HOST: dragonfly.database.svc.cluster.local
+              REDIS_PORT: "6379"
+              REDIS_PASSWORD: ${DRAGONFLY_PASSWORD}
+              RELEASE_CHECK_URL: https://api.github.com/repos/netbox-community/netbox/releases
+              WEBHOOKS_ENABLED: true
+              SKIP_SUPERUSER: false
+            envFrom:
+              - secretRef:
+                  name: *app
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/
+                    port: &port 8080
+                  initialDelaySeconds: 60
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                spec:
+                  httpGet:
+                    path: /api/
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 30
+            resources:
+              requests:
+                cpu: 10m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames: ["netbox.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      config:
+        type: configMap
+        name: netbox-config
+        globalMounts:
+          - path: /etc/netbox/config/configuration.py
+            subPath: configuration.py
+            readOnly: true
+      pipeline:
+        type: configMap
+        name: netbox-pipeline
+        globalMounts:
+          - path: /opt/netbox/netbox/netbox/custom_pipeline.py
+            subPath: custom_pipeline.py
+            readOnly: true
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /opt/netbox/netbox/media
+      reports:
+        type: emptyDir
+        globalMounts:
+          - path: /opt/netbox/netbox/reports
+      scripts:
+        type: emptyDir
+        globalMounts:
+          - path: /opt/netbox/netbox/scripts

@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./externalsecret.yaml
+  - ./helmrelease.yaml
+configMapGenerator:
+  - name: netbox-config
+    files:
+      - authentik.py=./config/authentik.py
+  - name: netbox-pipeline
+    files:
+      - custom_pipeline.py=./config/custom_pipeline.py
+generatorOptions:
+  disableNameSuffixHash: true
