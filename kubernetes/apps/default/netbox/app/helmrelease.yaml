@@ -130,7 +130,7 @@ spec:
             subPath: custom_pipeline.py
             readOnly: true
       data:
-        existingClaim: *app
+        existingClaim: netbox-pvc
         globalMounts:
           - path: /opt/netbox/netbox/media
       reports:
