@@ -45,16 +45,16 @@ spec:
               GRAPHQL_ENABLED: true
               MEDIA_ROOT: /opt/netbox/netbox/media
               METRICS_ENABLED: false
-              REDIS_CACHE_DATABASE: 22
+              REDIS_CACHE_DATABASE: 7
               REDIS_CACHE_HOST: dragonfly.database.svc.cluster.local
               REDIS_CACHE_PORT: "6379"
               REDIS_CACHE_PASSWORD: ${DRAGONFLY_PASSWORD}
-              REDIS_DATABASE: 21
+              REDIS_DATABASE: 8
               REDIS_HOST: dragonfly.database.svc.cluster.local
               REDIS_PORT: "6379"
               REDIS_PASSWORD: ${DRAGONFLY_PASSWORD}
-              REDIS_URL: "redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379/21"
-              REDIS_CACHE_URL: "redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379/22"
+              REDIS_URL: "redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379/8"
+              REDIS_CACHE_URL: "redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379/7"
               RELEASE_CHECK_URL: https://api.github.com/repos/netbox-community/netbox/releases
               WEBHOOKS_ENABLED: true
               SKIP_SUPERUSER: false

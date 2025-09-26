@@ -5,7 +5,7 @@ metadata:
   name: netbox-pv
 spec:
   capacity:
-    storage: 50Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
