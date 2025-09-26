@@ -26,7 +26,7 @@ spec:
             image:
               repository: docker.io/library/alpine
               tag: 3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
-            command: ["sh", "-c", "chown -R 3000:3000 /opt/unit/state"]
+            command: ["sh", "-c", "chown -R 3000:3000 /opt/unit/"]
             securityContext:
               runAsUser: 0
               runAsGroup: 0
@@ -38,7 +38,7 @@ spec:
             env:
               TIME_ZONE: ${TIMEZONE}
               CORS_ORIGIN_ALLOW_ALL: true
-              DB_WAIT_DEBUG: "1"
+              DB_WAIT_DEBUG: "10"
               HOUSEKEEPING_INTERVAL: "86400"
               REMOTE_AUTH_ENABLED: true
               REMOTE_AUTH_BACKEND: social_core.backends.open_id_connect.OpenIdConnectAuth
@@ -128,7 +128,7 @@ spec:
         existingClaim: netbox-pvc
         globalMounts:
           - path: /opt/netbox/netbox/media
-      unit-state:
+      unit:
         type: emptyDir
         globalMounts:
-          - path: /opt/unit/state
+          - path: /opt/unit/
