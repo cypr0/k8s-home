@@ -47,7 +47,7 @@ spec:
               SOCIAL_AUTH_OIDC_SECRET: ${NETBOX_OPENID_CLIENT_SECRET}
               SOCIAL_AUTH_OIDC_SCOPE: openid profile email roles
               LOGOUT_REDIRECT_URL: https://id.${SECRET_DOMAIN}/application/o/netbox/end-session/
-              EMAIL_FROM: "Netbox <mail@{SECRET_DOMAIN}>"
+              EMAIL_FROM: "Netbox <mail@${SECRET_DOMAIN}>"
               EMAIL_PORT: 25
               EMAIL_SERVER: ${SECRET_MAIL_SERVER}
               EMAIL_TIMEOUT: 30
@@ -66,7 +66,7 @@ spec:
               REDIS_CACHE_URL: "redis://:${DRAGONFLY_PASSWORD}@dragonfly.database.svc.cluster.local:6379/7"
               RELEASE_CHECK_URL: https://api.github.com/repos/netbox-community/netbox/releases
               WEBHOOKS_ENABLED: true
-              SKIP_SUPERUSER: false
+              SKIP_SUPERUSER: true
             envFrom:
               - secretRef:
                   name: netbox-secret
