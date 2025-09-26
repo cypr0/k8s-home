@@ -42,11 +42,11 @@ spec:
               HOUSEKEEPING_INTERVAL: "86400"
               REMOTE_AUTH_ENABLED: true
               REMOTE_AUTH_BACKEND: social_core.backends.open_id_connect.OpenIdConnectAuth
-              SOCIAL_AUTH_OIDC_OIDC_ENDPOINT: https://id.{SECRET_DOMAIN}/application/o/netbox/
+              SOCIAL_AUTH_OIDC_OIDC_ENDPOINT: https://id.${SECRET_DOMAIN}/application/o/netbox/
               SOCIAL_AUTH_OIDC_KEY: ${NETBOX_OPENID_CLIENT_ID}
               SOCIAL_AUTH_OIDC_SECRET: ${NETBOX_OPENID_CLIENT_SECRET}
               SOCIAL_AUTH_OIDC_SCOPE: openid profile email roles
-              LOGOUT_REDIRECT_URL: https://id.{SECRET_DOMAIN}/application/o/netbox/end-session/
+              LOGOUT_REDIRECT_URL: https://id.${SECRET_DOMAIN}/application/o/netbox/end-session/
               EMAIL_FROM: "Netbox <mail@{SECRET_DOMAIN}>"
               EMAIL_PORT: 25
               EMAIL_SERVER: ${SECRET_MAIL_SERVER}
