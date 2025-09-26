@@ -28,7 +28,7 @@ spec:
               tag: v4.4@sha256:f8687d9ccca82224c6967c5c2383692dab7a76a4b75d98043de982dc09acb72e
             env:
               TIME_ZONE: ${TIMEZONE}
-              CORS_ORIGIN_ALLOW_ALL: "True"
+              CORS_ORIGIN_ALLOW_ALL: true
               DB_WAIT_DEBUG: "1"
               HOUSEKEEPING_INTERVAL: "86400"
               REMOTE_AUTH_ENABLED: true

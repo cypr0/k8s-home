@@ -1,11 +1,31 @@
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: netbox-pv
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: netbox-data
+  mountOptions:
+    - hard
+    - rw
+    - nfsvers=4.2
+  nfs:
+    path: /mnt/hdd/k8s/nbx
+    server: ${SECRET_NAS_SERVER}
+    readOnly: false
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: netbox-pvc
 spec:
-  accessModes: ["ReadWriteOnce"]
-  storageClassName: longhorn-ha
+  accessModes: ["ReadWriteMany"]
+  storageClassName: netbox-data
   resources:
     requests:
       storage: 5Gi
