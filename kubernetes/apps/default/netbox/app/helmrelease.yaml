@@ -76,7 +76,7 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /api/
+                    path: /login/
                     port: &port 8080
                   initialDelaySeconds: 60
                   periodSeconds: 10
@@ -87,7 +87,7 @@ spec:
                 enabled: true
                 spec:
                   httpGet:
-                    path: /api/
+                    path: /login/
                     port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
