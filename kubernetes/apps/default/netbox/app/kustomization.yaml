@@ -7,10 +7,10 @@ resources:
   - ./helmrelease.yaml
   - ./pvc.yaml
 configMapGenerator:
-  - name: netbox-config
+  - name: auth-config
     files:
       - authentik.py=./config/authentik.py
-  - name: netbox-pipeline
+  - name: auth-pipeline
     files:
       - custom_pipeline.py=./config/custom_pipeline.py
 generatorOptions:

@@ -99,13 +99,12 @@ spec:
                 memory: 512Mi
               limits:
                 memory: 2Gi
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 3000
-        runAsGroup: 3000
-        fsGroup: 3000
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
+            securityContext:
+              runAsUser: 3000
+              runAsGroup: 3000
+              fsGroup: 3000
+              fsGroupChangePolicy: OnRootMismatch
+              seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: netbox
@@ -132,3 +131,17 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /opt/unit/
+      auth-config:
+        type: configMap
+        name: auth-config
+        globalMounts:
+          - path: /etc/netbox/config/authentik.py
+            subPath: authentik.py
+            readOnly: true
+      auth-pipeline:
+        type: configMap
+        name: auth-pipeline
+        globalMounts:
+          - path: /opt/netbox/netbox/netbox/custom_pipeline.py
+            subPath: custom_pipeline.py
+            readOnly: true
