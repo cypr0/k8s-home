@@ -21,6 +21,10 @@ spec:
       netbox:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          - name: fix-perms
+            image: busybox
+            command: ["sh", "-c", "chown -R 3000:3000 /opt/unit/state"]
         containers:
           app:
             image:
@@ -119,3 +123,7 @@ spec:
         existingClaim: netbox-pvc
         globalMounts:
           - path: /opt/netbox/netbox/media
+      unit-state:
+        type: emptyDir
+        globalMounts:
+          - path: /opt/unit/state
