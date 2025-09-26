@@ -115,7 +115,7 @@ spec:
       app:
         hostnames: ["netbox.${SECRET_DOMAIN}"]
         parentRefs:
-          - name: internal
+          - name: external
             namespace: kube-system
             sectionName: https
         rules:
