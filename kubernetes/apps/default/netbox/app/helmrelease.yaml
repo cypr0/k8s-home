@@ -263,7 +263,7 @@ spec:
           - path: /opt/unit/
       auth-config:
         type: configMap
-        name: auth-config
+        name: netbox-auth-config
         advancedMounts:
           netbox:
             app:
@@ -272,7 +272,7 @@ spec:
                 readOnly: true
       auth-pipeline:
         type: configMap
-        name: auth-pipeline
+        name: netbox-auth-pipeline
         advancedMounts:
           netbox:
             app:
