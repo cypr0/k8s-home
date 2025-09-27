@@ -261,6 +261,10 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /opt/unit/
+      unit-tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /opt/unit/tmp
       auth-config:
         type: configMap
         name: netbox-auth-config
