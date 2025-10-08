@@ -16,6 +16,8 @@ spec:
     parameters:
       max_connections: "200"
       shared_buffers: 256MB
+    shared_preload_libraries:
+      - plugin_barman_cloud
   nodeMaintenanceWindow:
     inProgress: false
     reusePVC: true
