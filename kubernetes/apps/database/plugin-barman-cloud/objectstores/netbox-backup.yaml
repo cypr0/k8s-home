@@ -1,0 +1,24 @@
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: netbox-barman-backup
+  namespace: storage
+spec:
+  configuration:
+    destinationPath: s3://k8s-postgres/netbox/
+    endpointURL: ${SECRET_S3_URL}
+    s3Credentials:
+      accessKeyId:
+        name: plugin-barman-cloud-secret
+        key: CCESS_KEY_ID
+      secretAccessKey:
+        name: plugin-barman-cloud-secret
+        key: SECRET_ACCESS_KEY
+    wal:
+      compression: zstd
+      maxParallel: 2
+    data:
+      compression: gzip
+      jobs: 2
+  retentionPolicy: 8d
