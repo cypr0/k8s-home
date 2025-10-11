@@ -25,7 +25,7 @@ spec:
           fix-perms:
             image:
               repository: docker.io/library/alpine
-              tag: 3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
+              tag: 3.22.2@sha256:4b7ce07002c69e8f3d704a9c5d6fd3053be500b7f1c69fc0d80990c2ad8dd412
             command: ["sh", "-c", "mkdir -p /opt/unit/tmp/ && mkdir -p /opt/unit/state/certs && mkdir -p /opt/unit/state/scripts && chown -R 3000:3000 /opt/unit/"]
             securityContext:
               runAsUser: 0
@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: netboxcommunity/netbox
-              tag: v4.4@sha256:44e23ab5d10b2dd2045c7907568ba51996472d9a55647c7194148f439c5ae591
+              tag: v4.4@sha256:a6e4a44f82882a8ae7d6a3f35663b0aae1da8692eb0e6ad4ae0912c0e000947c
             env:
               TIME_ZONE: ${TIMEZONE}
               CORS_ORIGIN_ALLOW_ALL: true

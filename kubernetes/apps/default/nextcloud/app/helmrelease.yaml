@@ -31,7 +31,7 @@ spec:
           nextcloud:
             image:
               repository: docker.io/library/nextcloud
-              tag: 32.0.0-fpm-alpine@sha256:2bd9ea63eb51fa68f3fea06744aabb9a45a7b8994a9b594bcffa1d4b18e5cd1d
+              tag: 32.0.0-fpm-alpine@sha256:0a8edd90fc28b82c4f7e2432151be288cc955d2d91fe68aacb3357a677f85cb8
             securityContext:
               runAsUser: 3000
               runAsGroup: 3000
@@ -96,11 +96,11 @@ spec:
           nginx:
             image:
               repository: nginxinc/nginx-unprivileged
-              tag: 1.29-alpine@sha256:2bae49de8b7394f1ef4b6ddc5d8a6d07467d82883d20fb54556ce90b445870f9
+              tag: 1.29-alpine@sha256:a9155b22c828f8d76320c778f0d1735440dbdaad545984a6ed7c76614b66ebd9
           clamav:
             image:
               repository: clamav/clamav
-              tag: 1.4.3@sha256:b2aaac5cd7b3eebd7e4175840ecd05ec31daccf7911d3a0bdaa936ccef9b2779
+              tag: 1.5.0@sha256:e49ed2b9657a224e0c20bea0f99cc73c186d375ca6d114395717758712886787
             env:
               CLAMAV_NO_CLAMD: false
               CLAMAV_NO_FRESHCLAMD: false
@@ -118,7 +118,7 @@ spec:
           collabora:
             image:
               repository: collabora/code
-              tag: 25.04.5.3.1@sha256:d655791f533f28bc32431a2fcf33a36cadd05ef6745a2b597a4e6534021bdc88
+              tag: 25.04.6.1.1@sha256:83028c0bad42f6040c5b2a4d0aab50e2428238fbb628349c5d135e075e05f35d
             env:
               - name: username
                 valueFrom:
@@ -147,7 +147,7 @@ spec:
           whiteboard:
             image:
               repository: ghcr.io/nextcloud-releases/whiteboard
-              tag: v1.2.1@sha256:d032a8a7a9288245cb039df8bac367d8c3ae2ac9a3c30e036fa1bc3c7e32a3d1
+              tag: v1.3.0@sha256:0b15d4f7acd0aa8c733d9849344c5fe18a1f464caca8e78c2a2462cfed23c437
             env:
               - name: NEXTCLOUD_URL
                 value: "https://cloud.${SECRET_DOMAIN}"
@@ -168,7 +168,7 @@ spec:
           init-chmod-pvc:
             image:
               repository: docker.io/library/alpine
-              tag: 3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
+              tag: 3.22.2@sha256:4b7ce07002c69e8f3d704a9c5d6fd3053be500b7f1c69fc0d80990c2ad8dd412
             command: ["/bin/sh"]
             args: ["-c", "mkdir -p /var/www/html/config && chmod 0770 /var/www/html/config && chown 3000:3000 /var/www/html/config && mkdir -p /usr/local/etc/php/conf.d && chmod 0770 /usr/local/etc/php/conf.d && chown 3000:3000 /usr/local/etc/php/conf.d"]
             securityContext:
