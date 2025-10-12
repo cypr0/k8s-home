@@ -16,12 +16,12 @@ spec:
     parameters:
       max_connections: "200"
       shared_buffers: 256MB
- # plugins:
- #   - name: barman-cloud.cloudnative-pg.io
- #     enabled: true
- #     isWALArchiver: true
- #     parameters:
- #       barmanObjectName: netbox-barman-backup
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      enabled: true
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: netbox-barman-backup
   nodeMaintenanceWindow:
     inProgress: false
     reusePVC: true
