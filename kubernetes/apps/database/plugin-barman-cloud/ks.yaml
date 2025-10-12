@@ -35,7 +35,7 @@ spec:
     - name: plugin-barman-cloud
       namespace: database
   interval: 1h
-  path: ./kubernetes/apps/database/plugin-barman-cloud/objectsores
+  path: ./kubernetes/apps/database/plugin-barman-cloud/objectstores
   prune: true
   retryInterval: 2m
   sourceRef:
