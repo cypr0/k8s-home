@@ -3,7 +3,6 @@ apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
   name: netbox-barman-backup
-  namespace: storage
 spec:
   configuration:
     destinationPath: s3://k8s-postgres/netbox/
