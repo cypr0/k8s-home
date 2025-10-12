@@ -6,4 +6,5 @@ namespace: default
 resources:
   - ./cluster.yaml
   - ./externalsecret.yaml
+  - ./objectstore.yaml
   - ./scheduledbackup.yaml
