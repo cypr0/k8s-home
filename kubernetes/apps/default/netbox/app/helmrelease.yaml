@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: netboxcommunity/netbox
-              tag: v4.4@sha256:bc7c5c613526281d75658c25bc51cb1fa6b3855388d1088f33f48cd075b0bd4f
+              tag: v4.4@sha256:19abbe2e6e7571a6e164727cbf1ca6940878495ae8306daec8eddb82305b0681
             env:
               TIME_ZONE: ${TIMEZONE}
               CORS_ORIGIN_ALLOW_ALL: true
