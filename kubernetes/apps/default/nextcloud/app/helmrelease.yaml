@@ -31,7 +31,7 @@ spec:
           nextcloud:
             image:
               repository: docker.io/library/nextcloud
-              tag: 32.0.1-fpm-alpine@sha256:288a3d915c474e146ec4b7c84b0d49c52cbc950d99760420c24e1c667d3b193e
+              tag: 32.0.1-fpm-alpine@sha256:f5095b42d71293b19591d156aadc578600360c1fca02fe752d65b81f05e941b6
             securityContext:
               runAsUser: 3000
               runAsGroup: 3000
@@ -96,11 +96,11 @@ spec:
           nginx:
             image:
               repository: nginxinc/nginx-unprivileged
-              tag: 1.29-alpine@sha256:7662e7dd548daacb2e1c0d00d1a9cd785cfad08e1f559cf233f84a7e08cc23a0
+              tag: 1.29-alpine@sha256:dd1707e363384e88791da80a60d1566c0822731ef15ad8080a69bcbb2729c331
           clamav:
             image:
               repository: clamav/clamav
-              tag: 1.5.1@sha256:4d4733092748f8666579b4ca1da5e3f74cc794f9e82e1b89afb8b37a0768826d
+              tag: 1.5.1@sha256:323cec50d1d950d9b5f5c42f64610a4a4102d6f18c38060af6d8513f43137805
             env:
               CLAMAV_NO_CLAMD: false
               CLAMAV_NO_FRESHCLAMD: false
