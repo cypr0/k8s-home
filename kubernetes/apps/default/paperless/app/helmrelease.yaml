@@ -126,7 +126,7 @@ spec:
           paperless-ai:
             image:
               repository: docker.io/clusterzx/paperless-ai
-              tag: 3.0.7
+              tag: 3.0.9
             env:
               PAPERLESS_AI_INITIAL_SETUP: "no"
               PAPERLESS_API_URL: "http://paperless-paperless-ngx.default.svc.cluster.local/api"
