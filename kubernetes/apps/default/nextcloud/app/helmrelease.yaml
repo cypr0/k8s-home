@@ -96,11 +96,11 @@ spec:
           nginx:
             image:
               repository: nginxinc/nginx-unprivileged
-              tag: 1.29-alpine@sha256:dd1707e363384e88791da80a60d1566c0822731ef15ad8080a69bcbb2729c331
+              tag: 1.29-alpine@sha256:2cddd18b805962549f850a5f6f1f4b3ccb667343e3c6ba42e8ce6a6f7e389709
           clamav:
             image:
               repository: clamav/clamav
-              tag: 1.5.1@sha256:323cec50d1d950d9b5f5c42f64610a4a4102d6f18c38060af6d8513f43137805
+              tag: 1.5.1@sha256:a56287b4ffa299bde2ef09234cb8b6134d591d0be05b63f5065932dc93cb2435
             env:
               CLAMAV_NO_CLAMD: false
               CLAMAV_NO_FRESHCLAMD: false
@@ -118,7 +118,7 @@ spec:
           collabora:
             image:
               repository: collabora/code
-              tag: 25.04.6.2.1@sha256:81173ae698bfc9035a64b970b6fe1ad0c6450dab3b3300e17c42337f537553c8
+              tag: 25.04.7.1.1@sha256:b70d5ffb3c88ec365c3685cbd4ce56cd0d29122a1290e98e7f0e9932c2cd8246
             env:
               - name: username
                 valueFrom:
@@ -147,7 +147,7 @@ spec:
           whiteboard:
             image:
               repository: ghcr.io/nextcloud-releases/whiteboard
-              tag: v1.4.0@sha256:00afa6813ecd992c3d4a27a41871423c092f0ce177895dc3be2a9c54013ca68e
+              tag: v1.4.1@sha256:c1b5b207cbffa325a8b491079c76e6c2a1b5f881e5746008486f345968c40ef2
             env:
               - name: NEXTCLOUD_URL
                 value: "https://cloud.${SECRET_DOMAIN}"
