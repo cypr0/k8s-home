@@ -118,7 +118,7 @@ spec:
           collabora:
             image:
               repository: collabora/code
-              tag: 25.04.7.1.1@sha256:b70d5ffb3c88ec365c3685cbd4ce56cd0d29122a1290e98e7f0e9932c2cd8246
+              tag: 25.04.7.2.1@sha256:4585c88c15d681a04495e9881e99974040373089b941d6909f9c9e817553457c
             env:
               - name: username
                 valueFrom:
