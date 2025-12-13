@@ -12,7 +12,7 @@ spec:
         fsGroup: 3000
       containers:
       - name: nextcloud-job-config-postinstall
-        image: docker.io/library/nextcloud:32.0.2-fpm-alpine
+        image: docker.io/library/nextcloud:32.0.3-fpm-alpine
         command: ["/bin/sh", "-c"]
         args: ["sleep 600; until php /var/www/html/occ status --output json | grep -q '\"installed\":true'; do sleep 10; done && php /var/www/html/occ upgrade && php /var/www/html/occ db:add-missing-indices && php /var/www/html/occ db:add-missing-columns && php /var/www/html/occ db:add-missing-primary-keys && php /var/www/html/occ db:convert-filecache-bigint && php /var/www/html/occ maintenance:repair --include-expensive"]
         volumeMounts:
@@ -45,7 +45,7 @@ spec:
         fsGroup: 3000
       containers:
       - name: nextcloud-job-config-addapps
-        image: docker.io/library/nextcloud:32.0.2-fpm-alpine
+        image: docker.io/library/nextcloud:32.0.3-fpm-alpine
         command: ["/bin/sh", "-c"]
         args: ["sleep 660; until php /var/www/html/occ status --output json | grep -q '\"installed\":true'; do sleep 10; done && php /var/www/html/occ app:disable firstrunwizard && php /var/www/html/occ app:disable support && php /var/www/html/occ app:enable admin_audit && php /var/www/html/occ app:enable files_pdfviewer && php /var/www/html/occ app:enable groupfolders && php /var/www/html/occ app:install richdocuments && php /var/www/html/occ app:install files_antivirus && php /var/www/html/occ app:install whiteboard && php /var/www/html/occ app:install deck && php /var/www/html/occ app:install tables && php /var/www/html/occ app:install forms && php /var/www/html/occ app:install quota_warning && php /var/www/html/occ app:install user_oidc && php /var/www/html/occ app:install files_retention && php /var/www/html/occ app:install integration_openai && php /var/www/html/occ app:enable assistant"]
         volumeMounts:
@@ -78,7 +78,7 @@ spec:
         fsGroup: 3000
       containers:
       - name: nextcloud-job-config-oidc
-        image: docker.io/library/nextcloud:32.0.2-fpm-alpine
+        image: docker.io/library/nextcloud:32.0.3-fpm-alpine
         command: ["/bin/sh", "-c"]
         args:
         - |
@@ -140,7 +140,7 @@ spec:
         fsGroup: 3000
       containers:
       - name: nextcloud-job-config-whiteboard
-        image: docker.io/library/nextcloud:32.0.2-fpm-alpine
+        image: docker.io/library/nextcloud:32.0.3-fpm-alpine
         command: ["/bin/sh", "-c"]
         args:
           - |
@@ -188,7 +188,7 @@ spec:
         fsGroup: 3000
       containers:
       - name: nextcloud-job-config-richdocuments
-        image: docker.io/library/nextcloud:32.0.2-fpm-alpine
+        image: docker.io/library/nextcloud:32.0.3-fpm-alpine
         command: ["/bin/sh", "-c"]
         args:
           - |
@@ -242,7 +242,7 @@ spec:
             fsGroup: 3000
           containers:
             - name: nextcloud-cronjob-cron
-              image: docker.io/library/nextcloud:32.0.2-fpm-alpine
+              image: docker.io/library/nextcloud:32.0.3-fpm-alpine
               command:
                 - sh
                 - -c
@@ -293,7 +293,7 @@ spec:
             fsGroup: 3000
           containers:
           - name: nextcloud-cronjob-missingindices
-            image: docker.io/library/nextcloud:32.0.2-fpm-alpine
+            image: docker.io/library/nextcloud:32.0.3-fpm-alpine
             command: ["/bin/sh", "-c"]
             args:
               - |
@@ -342,7 +342,7 @@ spec:
             fsGroup: 3000
           containers:
           - name: nextcloud-cronjob-ai-worker
-            image: docker.io/library/nextcloud:32.0.2-fpm-alpine
+            image: docker.io/library/nextcloud:32.0.3-fpm-alpine
             command: ["/bin/sh", "-c"]
             args:
               - |
