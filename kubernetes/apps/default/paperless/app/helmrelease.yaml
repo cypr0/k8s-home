@@ -28,7 +28,7 @@ spec:
           paperless-ngx:
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
-              tag: 2.20.0@sha256:8ffd737c69a569bbdadc118e7f54b0b1050ffac2868fdf9e390a68cb7c82a79d
+              tag: 2.20.2@sha256:8cbd8ce3ef1857bd144026a7e7192d0889188352b5271631e42ff069ccceeb74
             env:
               PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
               PAPERLESS_CONSUMER_POLLING: 60
@@ -87,7 +87,7 @@ spec:
           gotenberg:
             image:
               repository: docker.io/gotenberg/gotenberg
-              tag: 8.25.0
+              tag: 8.25.1
             command:
               - gotenberg
               - "--chromium-disable-javascript=true"

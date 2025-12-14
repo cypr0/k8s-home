@@ -31,7 +31,7 @@ spec:
           nextcloud:
             image:
               repository: docker.io/library/nextcloud
-              tag: 32.0.2-fpm-alpine@sha256:3244153c0415cf231c570a19b4a42c2477554c2efefb5412fe0af791255715b4
+              tag: 32.0.3-fpm-alpine@sha256:b323c555f458a5aa22fa9da6b854988bf801e219f0c3ab86a9f8f2e203b31ac9
             securityContext:
               runAsUser: 3000
               runAsGroup: 3000
@@ -96,11 +96,11 @@ spec:
           nginx:
             image:
               repository: nginxinc/nginx-unprivileged
-              tag: 1.29-alpine@sha256:2af55ce6348ca31e01f37f74cfb59617209b6c685a67b25e235bf45d86164d40
+              tag: 1.29-alpine@sha256:9bf2484108733e4c1c72280f83ba30d772d291d44049403bd6d592f216137771
           clamav:
             image:
               repository: clamav/clamav
-              tag: 1.5.1@sha256:81f82a940199afab561e2532848aa9c5b023e3ba46902a99854d5ce5cd49f16c
+              tag: 1.5.1@sha256:994903183e3bfda6a9fd7d39e773b33054c16b8dd15aa6d3e4aba0405f893a3a
             env:
               CLAMAV_NO_CLAMD: false
               CLAMAV_NO_FRESHCLAMD: false
@@ -147,7 +147,7 @@ spec:
           whiteboard:
             image:
               repository: ghcr.io/nextcloud-releases/whiteboard
-              tag: v1.4.2@sha256:651d111266b447440cb67fe63ed51bebb0aa883f64efed174c42e4992c9ad58c
+              tag: v1.5.0@sha256:b5c90781b9926fd949c47f8babf5b27e2f7406fe34f25da08c757fb00f5563b3
             env:
               - name: NEXTCLOUD_URL
                 value: "https://cloud.${SECRET_DOMAIN}"
@@ -168,7 +168,7 @@ spec:
           init-chmod-pvc:
             image:
               repository: docker.io/library/alpine
-              tag: 3.22.2@sha256:4b7ce07002c69e8f3d704a9c5d6fd3053be500b7f1c69fc0d80990c2ad8dd412
+              tag: 3.23.0@sha256:51183f2cfa6320055da30872f211093f9ff1d3cf06f39a0bdb212314c5dc7375
             command: ["/bin/sh"]
             args: ["-c", "mkdir -p /var/www/html/config && chmod 0770 /var/www/html/config && chown 3000:3000 /var/www/html/config && mkdir -p /usr/local/etc/php/conf.d && chmod 0770 /usr/local/etc/php/conf.d && chown 3000:3000 /usr/local/etc/php/conf.d"]
             securityContext:
