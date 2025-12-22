@@ -13,7 +13,7 @@ spec:
         spec:
           containers:
             - name: paperless-fix-ownership
-              image: alpine/curl:8.14.1
+              image: alpine/curl:8.17.0
               envFrom:
                 - secretRef:
                     name: paperless-secret
