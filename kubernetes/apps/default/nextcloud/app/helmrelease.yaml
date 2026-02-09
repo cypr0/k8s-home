@@ -96,7 +96,7 @@ spec:
           nginx:
             image:
               repository: nginxinc/nginx-unprivileged
-              tag: 1.29-alpine@sha256:062042031264627f065dbe8e16a2b54ec9a12757843c2d956e65623e650a1142
+              tag: 1.29-alpine@sha256:bae24904860527735a08e04722a92add40784b91e61389b710367c7d0e6d3b25
           clamav:
             image:
               repository: clamav/clamav
